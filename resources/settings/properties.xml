@@ -1,0 +1,16 @@
+<properties>
+	<property id="showInfoMain" type="number">1</property>
+	<property id="showInfoLeft" type="number">2</property>
+	<property id="showInfoRight" type="number">4</property>
+	<property id="showInfoBottom" type="number">14</property>
+	<property id="showInfoHrFallback" type="number">11</property>
+
+	<property id="ftpValue" type="number">250</property>	
+	<property id="powerPerSecond" type="number">3</property>	
+	<property id="showSeaLevelPressure" type="boolean">true</property>		
+	<property id="calcAvgPressurePerMinute" type="number">30</property>
+	<property id="targetSpeed" type="number">30</property>	
+	<property id="targetDistance" type="number">150</property>	
+	<property id="targetCalories" type="number">2000</property>	
+	<property id="targetCadence" type="number">95</property>		
+</properties>
