@@ -73,7 +73,9 @@ class WhatDistance extends WhatBase {
         value = meterToFeet(value);
       }
     } else {
-      value = kilometerToMile(value);
+      if (devSettings.distanceUnits == System.UNIT_STATUTE) {       
+        value = kilometerToMile(value);
+      }
     }
     return value;
   }
