@@ -12,5 +12,6 @@
 	<property id="targetSpeed" type="number">30</property>	
 	<property id="targetDistance" type="number">150</property>	
 	<property id="targetCalories" type="number">2000</property>	
-	<property id="targetCadence" type="number">95</property>		
+	<property id="targetCadence" type="number">95</property>	
+	<property id="targetEnergyExpenditure" type="number">15</property>		
 </properties>

@@ -13,7 +13,8 @@
 			<listEntry value="9">@Strings.ShowInfoAmbientPressure</listEntry>
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
-			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>				
+			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>					
         </settingConfig>
     </setting>      
 	<setting propertyKey="@Properties.showInfoLeft" title="@Strings.ShowInfoLeft" prompt="@Strings.ShowInfoPrompt">
@@ -30,7 +31,8 @@
 			<listEntry value="9">@Strings.ShowInfoAmbientPressure</listEntry>
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>		
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
-			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>			
+			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>				
         </settingConfig>
     </setting> 
 	<setting propertyKey="@Properties.showInfoRight" title="@Strings.ShowInfoRight" prompt="@Strings.ShowInfoPrompt">
@@ -47,7 +49,8 @@
 			<listEntry value="9">@Strings.ShowInfoAmbientPressure</listEntry>
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>	
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
-			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>			
+			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>				
         </settingConfig>
     </setting> 
 	 <setting propertyKey="@Properties.showInfoBottom" title="@Strings.ShowInfoBottom" prompt="@Strings.ShowInfoPrompt">
@@ -64,7 +67,8 @@
 			<listEntry value="9">@Strings.ShowInfoAmbientPressure</listEntry>
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>	
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
-			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>		
+			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>	
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>		
         </settingConfig>
     </setting> 
 <setting propertyKey="@Properties.showInfoHrFallback" title="@Strings.ShowInfoHrFallback" prompt="@Strings.ShowInfoPrompt">
@@ -82,6 +86,7 @@
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>		
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
 			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>	
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>				
         </settingConfig>
     </setting> 
 	<setting propertyKey="@Properties.ftpValue" title="@Strings.FtpValue">
@@ -109,6 +114,9 @@
 		<settingConfig type="numeric" min="0" />
 	</setting>
 	<setting propertyKey="@Properties.targetCalories" title="@Strings.TargetCalories">
+		<settingConfig type="numeric" min="0" />
+	</setting>	
+	<setting propertyKey="@Properties.targetEnergyExpenditure" title="@Strings.TargetEnergyExpenditure">
 		<settingConfig type="numeric" min="0" />
 	</setting>	
 	

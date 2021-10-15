@@ -39,6 +39,7 @@ class whatpowerView extends WatchUi.DataField {
     _wTrainingEffect.setCurrent(info);
     _wTime.setCurrent(info);
     _wHeading.setCurrent(info);
+    _wEngergyExpenditure.setCurrent(info);
   }
 
   // Display the value you computed here. This will be called

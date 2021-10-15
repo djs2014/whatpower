@@ -14,6 +14,7 @@ var _wCalories as WhatCalories;
 var _wTrainingEffect as WhatTrainingEffect;
 var _wTime as WhatTime;
 var _wHeading as WhatHeading;
+var _wEngergyExpenditure as WhatEngergyExpenditure;
 
 var _showInfoMain = ShowInfoPower;
 var _showInfoLeft = ShowInfoNothing;
@@ -39,6 +40,7 @@ class whatpowerApp extends Application.AppBase {
     _wTrainingEffect = new WhatTrainingEffect();
     _wTime = new WhatTime();
     _wHeading = new WhatHeading();
+    _wEngergyExpenditure = new WhatEngergyExpenditure();
   }
 
   // onStart() is called on application start up
@@ -79,6 +81,7 @@ class whatpowerApp extends Application.AppBase {
         _wCadence.setTargetCadence(getNumberProperty("targetCadence", 95));
         _wDistance.setTargetDistance(getNumberProperty("targetDistance", 150));
         _wCalories.setTargetCalories(getNumberProperty("targetCalories", 2000));
+        _wEngergyExpenditure.setTargetEngergyExpenditure(getNumberProperty("targetEnergyExpenditure", 15));
 
         System.println("Settings loaded");
       } catch (ex) {

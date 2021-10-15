@@ -4,7 +4,6 @@ import Toybox.Activity;
 
 class WhatCalories extends WhatBase {
   hidden var calories = 0.0f;           // kcal
-  hidden var energyExpenditure = 0.0f;  // kcal/min
   hidden var targetCalories = 2000.0f;  // kcal
 
    function initialize() { WhatBase.initialize(); }
@@ -22,14 +21,7 @@ class WhatCalories extends WhatBase {
         calories = 0.0f;
       }
     }
-
-    if (info has : energyExpenditure) {
-      if (info.energyExpenditure) {
-        energyExpenditure = info.energyExpenditure;
-      } else {
-        energyExpenditure = 0.0f;
-      }
-    }
+   
   }
 
   function getCalories() {
@@ -38,7 +30,7 @@ class WhatCalories extends WhatBase {
     }
     return self.calories;
   }
-
+ 
   function getUnitsLong() as String { return "kcal"; }
 
   function getUnits() as String { return "kcal"; }
@@ -60,13 +52,7 @@ class WhatCalories extends WhatBase {
                           Graphics.COLOR_BLACK, 0);
     }
 
-    var percOfTarget = percentageOf(cal, targetCalories);
-    // var label = "Cal(" + percOfTarget.format("%.0f") + "%)";
-    // @@ TODO sep class?
-    // if (energyExpenditure) {
-    //   var ee = energyExpenditure.format("%0.1f") + "/min";
-    //   label = label + "~" + ee;
-    // }
+    var percOfTarget = percentageOf(cal, targetCalories);   
     var color = percentageToColor(percOfTarget);
 
     if (percOfTarget < 65) {

@@ -69,6 +69,8 @@ getShowInformation(showInfo, showInfoFallback) as WhatInformation {
     case ShowInfoTrainingEffect:
       return new WhatInformation(_wTrainingEffect.getTrainingEffect(), 0, 0,
                                  _wTrainingEffect);
+    case ShowInfoEnergyExpenditure:
+      return new WhatInformation(_wEngergyExpenditure.getEnergyExpenditure(), 0, 0, _wEngergyExpenditure);                          
     case ShowInfoNothing:
     default:
       return null;

@@ -53,10 +53,10 @@ class WhatDisplay {
     // 2 fields: w[246] h[160]
     // 3 fields: w[246] h[106]
 
-    widthAdditionalInfo = 25;
+    widthAdditionalInfo = 28;
     fontAdditionalInfo = mFontAdditionalLarger;
     if (isSmallField()) {
-      widthAdditionalInfo = 15;
+      widthAdditionalInfo = widthAdditionalInfo - 10;
       fontAdditionalInfo = mFontAdditional;
     }
   }
