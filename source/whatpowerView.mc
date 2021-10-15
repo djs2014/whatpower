@@ -27,6 +27,7 @@ class whatpowerView extends WatchUi.DataField {
   // Note that compute() and onUpdate() are asynchronous, and there is no
   // guarantee that compute() will be called before onUpdate().
   function compute(info as Activity.Info) as Void {
+    // @@ todo only calc if displayed
     _wHeartrate.setCurrent(info);
     _wPower.setCurrent(info);
     _wCadence.setCurrent(info);

@@ -9,7 +9,7 @@ class WhatGrade extends WhatBase {
   hidden var elapsedDistance = 0;
   hidden var grade = 0.0f;  // %
 
-   function initialize() { WhatBase.initialize(); }
+  function initialize() { WhatBase.initialize(); }
 
   function setCurrent(info as Activity.Info) {
     if (info has : altitude) {
@@ -67,7 +67,16 @@ class WhatGrade extends WhatBase {
 
   function getUnits() as String { return "%"; }
 
-  function getFormatString(fieldType) as String { return "%.2f"; }
+  function getFormatString(fieldType) as String {
+    switch (fieldType) {
+      case OneField:
+      case WideField:
+        return "%.2f";
+      case SmallField:
+      default:
+        return "%.1f";
+    }
+  }
 
   function getZoneInfo(distance) as ZoneInfo {
     distance = grade;

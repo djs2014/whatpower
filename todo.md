@@ -1,3 +1,8 @@
+bigger fonts left right
+hide main ==> left/right then bigger
+icons for heartrate etc.
+heading using lat/lng a and b 
+
 x Display % of target in graphic way @@?? circle part? in front of label
 = part of zone info check all classes -> color black/font  
 targetTrainingEffect test

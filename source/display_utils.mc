@@ -14,17 +14,18 @@ class WhatDisplay {
   hidden var mFontBottomLabel = Graphics.FONT_TINY;
   hidden var mFontBottomValue = Graphics.FONT_TINY;
   hidden var mFontUnits = Graphics.FONT_XTINY;
-  hidden var mFontAdditional = Graphics.FONT_XTINY;
-  hidden var mFontAdditionalLarger = Graphics.FONT_TINY;
 
-  hidden var widthAdditionalInfo = 15;
-  hidden var fontAdditionalInfo = mFontAdditional;
+  hidden var mFontLabelAdditional = Graphics.FONT_XTINY;
+  hidden var mFontValueAdditionalIndex = 1;
+  hidden var mFontValueAdditional =
+      [ Graphics.FONT_SYSTEM_SMALL, Graphics.FONT_SYSTEM_MEDIUM, Graphics.FONT_SYSTEM_LARGE ];
+  hidden var _widthAdditionalInfo = 15;
 
   var width = 0;
   var height = 0;
   var field = SmallField;
 
-   function initialize() { }
+  function initialize() {}
 
   function isSmallField() { return field == SmallField; }
   function isWideField() { return field == WideField; }
@@ -53,11 +54,11 @@ class WhatDisplay {
     // 2 fields: w[246] h[160]
     // 3 fields: w[246] h[106]
 
-    widthAdditionalInfo = 28;
-    fontAdditionalInfo = mFontAdditionalLarger;
+    _widthAdditionalInfo = 31.0f;
+    mFontValueAdditionalIndex = 2;
     if (isSmallField()) {
-      widthAdditionalInfo = widthAdditionalInfo - 10;
-      fontAdditionalInfo = mFontAdditional;
+      _widthAdditionalInfo = _widthAdditionalInfo - 10.0f;
+      mFontValueAdditionalIndex = 1;    
     }
   }
   function onUpdate(dc as Dc) {
@@ -97,7 +98,7 @@ class WhatDisplay {
     dc.drawLine(x, y, x + wPercentage, y);
     dc.drawPoint(x + maxwidth, y);
   }
-  
+
   function drawMainInfoCircle(radius, outlineColor, inlineColor, percentage) {
     var x = dc.getWidth() / 2;
     var y = dc.getHeight() / 2;
@@ -124,7 +125,7 @@ class WhatDisplay {
       fontValue = mFontValue;
     }
     var wv = dc.getTextWidthInPixels(value, fontValue);
-    if (wv >= (dc.getWidth() - (4 * widthAdditionalInfo))) {
+    if (wv >= (dc.getWidth() - (4 * _widthAdditionalInfo))) {
       fontValue = mFontValueSmall;
       wv = dc.getTextWidthInPixels(value, fontValue);
     }
@@ -167,7 +168,7 @@ class WhatDisplay {
   function drawBottomInfo(color, label, value, units, backColor, percentage) {
     var hv = dc.getFontHeight(mFontBottomValue);
 
-    var wBottomBar = dc.getWidth() - (4 * widthAdditionalInfo + margin);
+    var wBottomBar = dc.getWidth() - (4 * _widthAdditionalInfo + margin);
 
     var wl = dc.getTextWidthInPixels(label, mFontBottomLabel);
     var wv = dc.getTextWidthInPixels(value, mFontBottomValue);
@@ -188,7 +189,7 @@ class WhatDisplay {
     if (backColor != null) {
       dc.setColor(backColor, Graphics.COLOR_TRANSPARENT);
     }
-    var xb = 2 * widthAdditionalInfo + margin;
+    var xb = 2 * _widthAdditionalInfo + margin;
     var yb = dc.getHeight() - hv + 2;
     var yPercentage = dc.getHeight() - 2;
     var wPercentage = wBottomBar / 100.0 * percentage;
@@ -224,60 +225,82 @@ class WhatDisplay {
 
   function drawLeftInfo(color, value, backColor, units, outlineColor,
                         percentage) {
-    var barX = widthAdditionalInfo + margin;
+    var barX = _widthAdditionalInfo + margin;
 
     // circle back color
-    drawAdditonalInfoBG(barX, widthAdditionalInfo, backColor, percentage);
-    
+    drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage);
+
+    var fontValue = getFontAdditionalInfo(_widthAdditionalInfo * 2, value);
     // units + value color
     if (units == null || units.length() == 0) {
-      drawAdditonalInfoFGNoUnits(barX, widthAdditionalInfo, color, value);
+      drawAdditonalInfoFGNoUnits(barX, _widthAdditionalInfo, color, value,
+                                 fontValue);
     } else {
-      drawAdditonalInfoFG(barX, widthAdditionalInfo, color, value,
-                          fontAdditionalInfo, units, fontAdditionalInfo);
+      drawAdditonalInfoFG(barX, _widthAdditionalInfo, color, value, fontValue,
+                          units, mFontLabelAdditional);
     }
     // outline
-    drawAdditonalInfoOutline(barX, widthAdditionalInfo, outlineColor);
+    drawAdditonalInfoOutline(barX, _widthAdditionalInfo, outlineColor);
   }
 
   function drawRightInfo(color, value, backColor, units, outlineColor,
                          percentage) {
-    var barX = dc.getWidth() - widthAdditionalInfo - margin;
-    // circle back color
-    drawAdditonalInfoBG(barX, widthAdditionalInfo, backColor, percentage);
+    var barX = dc.getWidth() - _widthAdditionalInfo - margin;
+    // circle
+    drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage);
 
-    // units + value color
-    if (units == null || units.length() == 0) {
-      drawAdditonalInfoFGNoUnits(barX, widthAdditionalInfo, color, value);
-    } else {
-      drawAdditonalInfoFG(barX, widthAdditionalInfo, color, value,
-                          fontAdditionalInfo, units, fontAdditionalInfo);
-    }
     // outline
-    drawAdditonalInfoOutline(barX, widthAdditionalInfo, outlineColor);
+    drawAdditonalInfoOutline(barX, _widthAdditionalInfo, outlineColor);
+
+    // units + value
+    var fontValue = getFontAdditionalInfo(_widthAdditionalInfo * 2, value);
+    if (units == null || units.length() == 0) {
+      drawAdditonalInfoFGNoUnits(barX, _widthAdditionalInfo, color, value,
+                                 fontValue);
+    } else {
+      drawAdditonalInfoFG(barX, _widthAdditionalInfo, color, value, fontValue,
+                          units, mFontLabelAdditional);
+    }
+  }
+
+  hidden function getYcoordCircleAdditionalInfo(width) {
+    return dc.getHeight() - 2 * margin - width;
   }
   hidden function drawAdditonalInfoBG(x, width, color, percentage) {
+    var y = getYcoordCircleAdditionalInfo(width);
     dc.setColor(WhatColor.COLOR_WHITE_GRAY_1, Graphics.COLOR_TRANSPARENT);
-    dc.fillCircle(x, dc.getHeight() - 2 * margin - width, width);
+    dc.fillCircle(x, y, width);
 
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-    drawPercentageCircle(x, dc.getHeight() - 2 * margin - width, width,
-                         percentage);
+    drawPercentageCircle(x, y, width, percentage);
+  }
+
+  hidden function getFontAdditionalInfo(maxwidth, value) {
+    var font = mFontValueAdditional[mFontValueAdditionalIndex];
+    var wv = dc.getTextWidthInPixels(value, font);
+    
+    if (wv > maxwidth && mFontValueAdditionalIndex > 0) {
+      font = mFontValueAdditional[mFontValueAdditionalIndex - 1];      
+    }
+    return font;
   }
 
   hidden function drawAdditonalInfoFG(x, width, color, value, fontValue, label,
                                       fontLabel) {
-    var ha = dc.getFontHeight(fontValue);
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(x, dc.getHeight() - 2 * margin - width - ha, fontLabel, label,
-                Graphics.TEXT_JUSTIFY_CENTER);
-
-    dc.drawText(x, dc.getHeight() - 2 * margin - width, fontValue, value,
-                Graphics.TEXT_JUSTIFY_CENTER);
+    // value
+    var y = getYcoordCircleAdditionalInfo(width);
+    dc.drawText(x, y, fontValue, value,
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    // label
+    var ha = dc.getFontHeight(fontLabel);    
+    y = y + width - ha /2 - 2;
+    dc.drawText(x, y, fontLabel, label,
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
   }
 
-  hidden function drawAdditonalInfoFGNoUnits(x, width, color, value) {
-    var fontValue = mFontAdditionalLarger;
+  hidden function drawAdditonalInfoFGNoUnits(x, width, color, value,
+                                             fontValue) {
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
     dc.drawText(x, dc.getHeight() - 2 * margin - width, fontValue, value,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
