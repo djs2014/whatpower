@@ -34,6 +34,8 @@ class WhatPower extends WhatBase {
   // called once per second
   function setCurrent(info as Activity.Info) {
     available = false;
+    activityPaused = activityIsPaused(info);
+
     if (info has : currentPower) {
       available = true;
       var power = 0.0f;
@@ -68,6 +70,10 @@ class WhatPower extends WhatBase {
   }
 
   function powerPerX() {
+    if (activityPaused) {
+      return getAveragePower();
+    }
+
     if (dataPerSec.size() == 0) {
       return 0.0f;
     }
@@ -94,6 +100,11 @@ class WhatPower extends WhatBase {
   // Anaerobic Capacity	> 120% FTP
 
   function getZoneInfo(ppx) as ZoneInfo {
+    if (activityPaused) {
+       return new ZoneInfo(0, "Avg. Power",
+                          Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0);
+    }
+
     if (ppx == null || ppx == 0) {
       return new ZoneInfo(0, "Power (" + getUnitsLong() + ")",
                           Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0);

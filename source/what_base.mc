@@ -6,12 +6,23 @@ class WhatBase {
   var fieldType = SmallField;
   hidden var devSettings;
   hidden var available = true;
+  hidden var activityPaused = false;
+  
   function initialize() { devSettings = System.getDeviceSettings(); }
 
   function isAvailable() { return available; }
   function setFieldType(fieldType) { self.fieldType = fieldType; }
-
+  
   function setCurrent(info as Activity.Info) {}
+  function activityIsPaused(info as Activity.Info) {
+    if (info has : timerState) {
+      return info.timerState == Activity.TIMER_STATE_PAUSED;
+    }
+    return false;
+  }
+  // function showAverageWhenPaused() {
+  //   return showAverageWhenActivityPaused && activityPaused;
+  // }
 
   function getZoneInfo(value) as ZoneInfo {
     return new ZoneInfo(0, "", Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0);
@@ -31,11 +42,10 @@ class WhatBase {
     }
   }
 
-  // "Statute" gives distance in miles, elevation in feet, temperature in Fahrenheit.
-  // "Metric" gives distance in km, elevation in metres, temperature in Celsius.
-  function convertToMetricOrStatute(value) {
-    return value;
-  }
+  // "Statute" gives distance in miles, elevation in feet, temperature in
+  // Fahrenheit. "Metric" gives distance in km, elevation in metres, temperature
+  // in Celsius.
+  function convertToMetricOrStatute(value) { return value; }
 
   function convertToDisplayFormat(value, fieldType) as string {
     if (value == null) {

@@ -37,7 +37,7 @@ class WhatEngergyExpenditure extends WhatBase {
   function getFormatString(fieldType) as String { return "%.1f"; }
 
   function getZoneInfo(energyExpenditure) {
-    var label = "Energy exp.";
+    var label = "Energy exp";
     if (energyExpenditure == null || energyExpenditure == 0) {
       return new ZoneInfo(0, label, Graphics.COLOR_WHITE,
                           Graphics.COLOR_BLACK, 0);

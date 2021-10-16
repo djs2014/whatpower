@@ -4,9 +4,12 @@ import Toybox.Lang;
 
 class WhatDisplay {
   hidden var dc;
-  hidden var margin = 1;
+  hidden var margin = 1;  // y @@
+  hidden var marginLeft = 1;
+  hidden var marginRight = 1;
   hidden var backgroundColor = Graphics.COLOR_WHITE;
   hidden var nightMode = false;
+  hidden var showMainCircle = true;
 
   hidden var mFontLabel = Graphics.FONT_TINY;
   hidden var mFontValue = Graphics.FONT_LARGE;
@@ -20,7 +23,7 @@ class WhatDisplay {
   hidden var mFontValueAdditionalIndex = 1;
   hidden var mFontValueAdditional = [
     Graphics.FONT_SYSTEM_SMALL, Graphics.FONT_SYSTEM_MEDIUM,
-    Graphics.FONT_SYSTEM_LARGE
+    Graphics.FONT_SYSTEM_LARGE, Graphics.FONT_NUMBER_MILD
   ];
   hidden var _widthAdditionalInfo = 15;
 
@@ -35,6 +38,10 @@ class WhatDisplay {
   function isOneField() { return field == OneField; }
   function isNightMode() { return nightMode; }
   function setNightMode(nightMode) { self.nightMode = nightMode; }
+  function setShowMainCircle(showMainCircle) {
+    self.showMainCircle = showMainCircle;
+  }
+
   function onLayout(dc as Dc) {
     self.dc = dc;
 
@@ -56,12 +63,20 @@ class WhatDisplay {
     // 1 large field: w[246] h[322]
     // 2 fields: w[246] h[160]
     // 3 fields: w[246] h[106]
-
-    _widthAdditionalInfo = 31.0f;
-    mFontValueAdditionalIndex = 2;
-    if (isSmallField()) {
-      _widthAdditionalInfo = _widthAdditionalInfo - 10.0f;
-      mFontValueAdditionalIndex = 1;
+    if (showMainCircle) {
+      _widthAdditionalInfo = 31.0f;
+      mFontValueAdditionalIndex = 2;
+      if (isSmallField()) {
+        _widthAdditionalInfo = _widthAdditionalInfo - 10.0f;
+        mFontValueAdditionalIndex = 1;
+      }
+    } else {
+      _widthAdditionalInfo = min(dc.getWidth() / 4, dc.getHeight() / 2 + 10);
+      mFontValueAdditionalIndex = 3;
+      if (isSmallField()) {
+        _widthAdditionalInfo = 29.0f;
+        mFontValueAdditionalIndex = 1;
+      }
     }
   }
   function onUpdate(dc as Dc) {
@@ -135,13 +150,13 @@ class WhatDisplay {
 
     var hl = dc.getFontHeight(mFontLabel);
     var hv = dc.getFontHeight(fontValue);
-    var yl = dc.getHeight() / 2 - hv + margin;  //(hv / 2) - 1;
+    var yl = dc.getHeight() / 2 - hv + margin;
     var widthUnits = dc.getTextWidthInPixels(units, mFontUnits);
     var xv = dc.getWidth() / 2 - (widthValue + widthUnits) / 2;
 
     if (isSmallField()) {
       // label
-      yl = dc.getHeight() / 2 - hl - 2;  // (hv / 2) - margin;
+      yl = dc.getHeight() / 2 - hl - 2;
       dc.drawText(dc.getWidth() / 2, yl, mFontLabel, label,
                   Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
       // value
@@ -171,7 +186,8 @@ class WhatDisplay {
   function drawBottomInfo(color, label, value, units, backColor, percentage) {
     var hv = dc.getFontHeight(mFontBottomValue);
 
-    var wBottomBar = dc.getWidth() - (4 * _widthAdditionalInfo + margin);
+    var wBottomBar =
+        dc.getWidth() - (4 * _widthAdditionalInfo) + marginLeft + marginRight;
 
     var widthLabel = dc.getTextWidthInPixels(label, mFontBottomLabel);
     var widthValue = dc.getTextWidthInPixels(value, mFontBottomValue);
@@ -180,6 +196,9 @@ class WhatDisplay {
     var marginleft1 = 2;
     var marginleft2 = 2;
     if (isSmallField()) {
+      if (!showMainCircle) {
+        wBottomBar = dc.getWidth() - (2 * _widthAdditionalInfo);
+      }
       // no label
       marginleft1 = 0;
       widthLabel = 0;
@@ -187,7 +206,7 @@ class WhatDisplay {
     var wtot = widthLabel + marginleft1 + widthValue + marginleft2 + widthUnits;
     var drawUnits = (wtot < wBottomBar);
     if (!drawUnits) {
-     wtot = widthLabel + marginleft1 + widthValue;
+      wtot = widthLabel + marginleft1 + widthValue;
     }
 
     var xv = dc.getWidth() / 2 - wtot / 2;
@@ -196,13 +215,14 @@ class WhatDisplay {
     if (backColor != null) {
       dc.setColor(backColor, Graphics.COLOR_TRANSPARENT);
     }
-    var xb = 2 * _widthAdditionalInfo + margin;
+    var xb = dc.getWidth() / 2 -
+             wBottomBar / 2;  // 2 * _widthAdditionalInfo + margin;
     var yb = dc.getHeight() - hv + 2;
     var yPercentage = dc.getHeight() - 2;
     var wPercentage = wBottomBar / 100.0 * percentage;
     if (isSmallField()) {
       yb = dc.getHeight() - 5;
-      dc.fillRoundedRectangle(xb, yb, wBottomBar, 5, 3);
+      dc.fillRoundedRectangle(xb, yb, wBottomBar, hv / 2, 3);
     } else {
       dc.fillRoundedRectangle(xb, yb, wBottomBar, hv, 3);
     }
@@ -231,7 +251,7 @@ class WhatDisplay {
 
   function drawLeftInfo(color, value, backColor, units, outlineColor,
                         percentage) {
-    var barX = _widthAdditionalInfo + margin;
+    var barX = _widthAdditionalInfo + marginLeft;
 
     // circle back color
     drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage);
@@ -251,7 +271,7 @@ class WhatDisplay {
 
   function drawRightInfo(color, value, backColor, units, outlineColor,
                          percentage) {
-    var barX = dc.getWidth() - _widthAdditionalInfo - margin;
+    var barX = dc.getWidth() - _widthAdditionalInfo - marginRight;
     // circle
     drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage);
 
@@ -269,11 +289,15 @@ class WhatDisplay {
     }
   }
 
-  hidden function getYcoordCircleAdditionalInfo(width) {
-    return dc.getHeight() - 2 * margin - width;
+  hidden function getCenterYcoordCircleAdditionalInfo(width) {
+    if (showMainCircle) {
+      return dc.getHeight() - 2 * margin - width;
+    } else {
+      return dc.getHeight() / 2;
+    }
   }
   hidden function drawAdditonalInfoBG(x, width, color, percentage) {
-    var y = getYcoordCircleAdditionalInfo(width);
+    var y = getCenterYcoordCircleAdditionalInfo(width);
     dc.setColor(WhatColor.COLOR_WHITE_GRAY_1, Graphics.COLOR_TRANSPARENT);
     dc.fillCircle(x, y, width);
 
@@ -298,12 +322,12 @@ class WhatDisplay {
                                       fontLabel) {
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
     // value
-    var y = getYcoordCircleAdditionalInfo(width);
+    var y = getCenterYcoordCircleAdditionalInfo(width);
     dc.drawText(x, y, fontValue, value,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     // label
-    var ha = dc.getFontHeight(fontLabel);
-    y = y + width - ha / 2 - 2;
+    var ha = dc.getFontHeight(fontValue);
+    y = y + ha / 2;
     dc.drawText(x, y, fontLabel, label,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
   }
@@ -311,13 +335,15 @@ class WhatDisplay {
   hidden function drawAdditonalInfoFGNoUnits(x, width, color, value,
                                              fontValue) {
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(x, dc.getHeight() - 2 * margin - width, fontValue, value,
+    var y = getCenterYcoordCircleAdditionalInfo(width);
+    dc.drawText(x, y, fontValue, value,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
   }
 
   hidden function drawAdditonalInfoOutline(x, width, color) {
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-    dc.drawCircle(x, dc.getHeight() - 2 * margin - width, width);
+    var y = getCenterYcoordCircleAdditionalInfo(width);
+    dc.drawCircle(x, y, width);
   }
 }
 

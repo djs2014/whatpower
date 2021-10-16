@@ -8,7 +8,7 @@
 
 	<property id="ftpValue" type="number">250</property>	
 	<property id="powerPerSecond" type="number">3</property>	
-	<property id="showSeaLevelPressure" type="boolean">true</property>		
+	<property id="showSeaLevelPressure" type="boolean">true</property>			
 	<property id="calcAvgPressurePerMinute" type="number">30</property>
 	<property id="targetSpeed" type="number">30</property>	
 	<property id="targetDistance" type="number">150</property>	

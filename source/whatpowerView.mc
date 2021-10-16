@@ -52,6 +52,7 @@ class whatpowerView extends WatchUi.DataField {
 
     var mainFontColor = null;
     var wInfo = getShowInformation($._showInfoMain, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
+    mWD.setShowMainCircle(wInfo != null);
     if (wInfo == null) {
       if (mWD.isNightMode()) {
         mainFontColor = Graphics.COLOR_WHITE;
