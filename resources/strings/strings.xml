@@ -18,13 +18,14 @@
     <string id="ShowInfoLeft">Show left</string>        
     <string id="ShowInfoRight">Show right</string>        
     <string id="ShowInfoBottom">Show bottom</string>    
-    <string id="ShowInfoHrFallback">Fallback if no heartrate connected</string>    
+    <string id="ShowInfoHrFallback">Fallback if no HR connected</string>    
+    <string id="ShowInfoTrainingEffectFallback">Fallback if no training effect (needs HR)</string>    
 
     <string id="ShowInfoPrompt">Select information</string>
     
     <string id="ShowInfoNothing">Nothing</string>
     <string id="ShowInfoPower">Show power</string>    
-    <string id="ShowInfoHeartrate">Show heartrate</string>
+    <string id="ShowInfoHeartrate">Show heartrate (HR)</string>
     <string id="ShowInfoSpeed">Show speed</string>    
     <string id="ShowInfoCadence">Show cadence</string>    
     <string id="ShowInfoAltitude">Show altitude</string>

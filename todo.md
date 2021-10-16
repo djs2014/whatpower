@@ -1,7 +1,13 @@
 bigger fonts left right
 hide main ==> left/right then bigger
+option hide left/right values on small field
+
 icons for heartrate etc.
 heading using lat/lng a and b 
+activity pause -> show avg ex. calories/elapsed time
+teffect fall back hr+te == 0
+distance label
+label main / bottom
 
 x Display % of target in graphic way @@?? circle part? in front of label
 = part of zone info check all classes -> color black/font  

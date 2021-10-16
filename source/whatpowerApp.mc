@@ -21,6 +21,7 @@ var _showInfoLeft = ShowInfoNothing;
 var _showInfoRight = ShowInfoNothing;
 var _showInfoBottom = ShowInfoNothing;
 var _showInfoHrFallback = ShowInfoNothing;
+var _showInfoTrainingEffectFallback = ShowInfoNothing;
 
 var _showSealevelPressure = true;
 
@@ -28,7 +29,7 @@ class whatpowerApp extends Application.AppBase {
   function initialize() {
     AppBase.initialize();
 
-    _wPower = new WhatPower(); 
+    _wPower = new WhatPower();
     _wHeartrate = new WhateHeartrate();
     _wCadence = new WhatCadence();
     _wDistance = new WhatDistance();
@@ -66,14 +67,17 @@ class whatpowerApp extends Application.AppBase {
         $._showInfoRight = getNumberProperty("showInfoRight", ShowInfoCadence);
         $._showInfoBottom = getNumberProperty("showInfoBottom", ShowInfoSpeed);
         $._showInfoHrFallback =
-            getNumberProperty("showInfoHrFallback", ShowInfoSpeed);
+            getNumberProperty("showInfoHrFallback", ShowInfoCalories);
+        $._showInfoTrainingEffectFallback = getNumberProperty(
+            "showInfoTrainingEffectFallback", ShowInfoEnergyExpenditure);
 
         _wPower.setFtp(getNumberProperty("ftpValue", 200));
         _wPower.setPerSec(getNumberProperty("powerPerSecond", 3));
 
         _wPowerressure.setShowSeaLevelPressure(
             getBooleanProperty("showSeaLevelPressure", true));
-        _wPowerressure.setPerMin(getNumberProperty("calcAvgPressurePerMinute", 30));
+        _wPowerressure.setPerMin(
+            getNumberProperty("calcAvgPressurePerMinute", 30));
         _wPowerressure.reset();  //@@ QnD start activity
 
         _wHeartrate.initZones();
@@ -81,7 +85,8 @@ class whatpowerApp extends Application.AppBase {
         _wCadence.setTargetCadence(getNumberProperty("targetCadence", 95));
         _wDistance.setTargetDistance(getNumberProperty("targetDistance", 150));
         _wCalories.setTargetCalories(getNumberProperty("targetCalories", 2000));
-        _wEngergyExpenditure.setTargetEngergyExpenditure(getNumberProperty("targetEnergyExpenditure", 15));
+        _wEngergyExpenditure.setTargetEngergyExpenditure(
+            getNumberProperty("targetEnergyExpenditure", 15));
 
         System.println("Settings loaded");
       } catch (ex) {

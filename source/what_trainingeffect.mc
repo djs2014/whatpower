@@ -6,14 +6,21 @@ class WhatTrainingEffect extends WhatBase {
   hidden var trainingEffect = 0;
   hidden var targetEffect = 4.0f;
 
-   function initialize() { WhatBase.initialize(); }
+  function initialize() { WhatBase.initialize(); }
 
   function setCurrent(info as Activity.Info) {
+    available = false;
     if (info has : trainingEffect) {
       if (info.trainingEffect) {
         trainingEffect = info.trainingEffect;
       } else {
         trainingEffect = 0.0f;
+      }
+      // Training effect needs HR data
+      if (info has : currentHeartRate) {
+        if (info.currentHeartRate) {
+          available = true;
+        } 
       }
     }
   }
@@ -43,11 +50,11 @@ class WhatTrainingEffect extends WhatBase {
       return new ZoneInfo(1, "No effect", WhatColor.COLOR_WHITE_BLUE_3,
                           Graphics.COLOR_BLACK, percOfTarget);
     }
-    if (effect < 2) { 
+    if (effect < 2) {
       return new ZoneInfo(2, "Minor effect", WhatColor.COLOR_WHITE_LT_GREEN_3,
                           Graphics.COLOR_BLACK, percOfTarget);
     }
-    if (effect < 3) { 
+    if (effect < 3) {
       return new ZoneInfo(3, "Maintaining", WhatColor.COLOR_WHITE_YELLOW_3,
                           Graphics.COLOR_BLACK, percOfTarget);
     }

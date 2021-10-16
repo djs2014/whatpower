@@ -89,6 +89,24 @@
 			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>				
         </settingConfig>
     </setting> 
+	<setting propertyKey="@Properties.showInfoTrainingEffectFallback" title="@Strings.ShowInfoTrainingEffectFallback" prompt="@Strings.ShowInfoPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.ShowInfoNothing</listEntry>
+            <listEntry value="1">@Strings.ShowInfoPower</listEntry>            
+            <listEntry value="2">@Strings.ShowInfoHeartrate</listEntry>
+            <listEntry value="3">@Strings.ShowInfoSpeed</listEntry>
+            <listEntry value="4">@Strings.ShowInfoCadence</listEntry>
+			<listEntry value="5">@Strings.ShowInfoAltitude</listEntry>
+			<listEntry value="6">@Strings.ShowInfoGrade</listEntry>
+			<listEntry value="7">@Strings.ShowInfoHeading</listEntry>
+			<listEntry value="8">@Strings.ShowInfoDistance</listEntry>
+			<listEntry value="9">@Strings.ShowInfoAmbientPressure</listEntry>
+			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>		
+			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
+			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>	
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>				
+        </settingConfig>
+    </setting> 
 	<setting propertyKey="@Properties.ftpValue" title="@Strings.FtpValue">
 		<settingConfig type="numeric" min="0" />
 	</setting>	

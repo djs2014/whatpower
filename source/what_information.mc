@@ -14,23 +14,24 @@ enum {
   ShowInfoAmbientPressure = 9,
   ShowInfoTimeOfDay = 10,
   ShowInfoCalories = 11,
-  ShowInfoTotalAscent = 12,  // @@ combine ascent/descent
-  ShowInfoTotalDescent = 13,
+  ShowInfoTotalAscent = 12,   // @@ TODO combine ascent/descent
+  ShowInfoTotalDescent = 13,  // @@ TODO combine ascent/descent
   ShowInfoTrainingEffect = 14,
-  ShowInfoTemperature = 15,
-  ShowInfoEnergyExpenditure = 16  // @@ TODO
+  ShowInfoTemperature = 15,  // @@ not working yet
+  ShowInfoEnergyExpenditure = 16
 }
 
 function
-getShowInformation(showInfo, showInfoFallback) as WhatInformation {
+getShowInformation(showInfo, showInfoHrFallback,
+                   showInfoTrainingEffectFallback) as WhatInformation {
   // System.println("showInfo: " + showInfo);
   switch (showInfo) {
     case ShowInfoPower:
       return new WhatInformation(_wPower.powerPerX(), _wPower.getAveragePower(),
                                  _wPower.getMaxPower(), _wPower);
     case ShowInfoHeartrate:
-      if (!_wHeartrate.isAvailable() && showInfoFallback != ShowInfoNothing) {
-        return getShowInformation(showInfoFallback, ShowInfoNothing);
+      if (!_wHeartrate.isAvailable() && showInfoHrFallback != ShowInfoNothing) {
+        return getShowInformation(showInfoHrFallback, ShowInfoNothing,ShowInfoNothing);
       }
       return new WhatInformation(_wHeartrate.getCurrentHeartrate(),
                                  _wHeartrate.getAverageHeartrate(),
@@ -67,10 +68,16 @@ getShowInformation(showInfo, showInfoFallback) as WhatInformation {
       return new WhatInformation(_wAltitude.getTotalDescent(), 0, 0,
                                  _wAltitude);
     case ShowInfoTrainingEffect:
+      if (!_wTrainingEffect.isAvailable() &&
+          showInfoTrainingEffectFallback != ShowInfoNothing) {
+        return getShowInformation(showInfoTrainingEffectFallback,
+                                  ShowInfoNothing,ShowInfoNothing);
+      }
       return new WhatInformation(_wTrainingEffect.getTrainingEffect(), 0, 0,
                                  _wTrainingEffect);
     case ShowInfoEnergyExpenditure:
-      return new WhatInformation(_wEngergyExpenditure.getEnergyExpenditure(), 0, 0, _wEngergyExpenditure);                          
+      return new WhatInformation(_wEngergyExpenditure.getEnergyExpenditure(), 0,
+                                 0, _wEngergyExpenditure);
     case ShowInfoNothing:
     default:
       return null;

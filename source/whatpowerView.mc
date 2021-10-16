@@ -5,12 +5,12 @@ import Toybox.WatchUi;
 import Toybox.System;
 
 class whatpowerView extends WatchUi.DataField {
-  hidden var mFontLabel = Graphics.FONT_TINY;
-  hidden var mFontValue = Graphics.FONT_LARGE;
-  hidden var mFontValueWideField = Graphics.FONT_NUMBER_MILD;
-  hidden var mFontPostfix = Graphics.FONT_XTINY;
-  hidden var mFontAdditional = Graphics.FONT_XTINY;
-  hidden var mFontAdditionalLarger = Graphics.FONT_TINY;
+  // hidden var mFontLabel = Graphics.FONT_TINY;
+  // hidden var mFontValue = Graphics.FONT_LARGE;
+  // hidden var mFontValueWideField = Graphics.FONT_NUMBER_MILD;
+  // hidden var mFontPostfix = Graphics.FONT_XTINY;
+  // hidden var mFontAdditional = Graphics.FONT_XTINY;
+  // hidden var mFontAdditionalLarger = Graphics.FONT_TINY;
   hidden var mWD;
 
   function initialize() {
@@ -50,10 +50,8 @@ class whatpowerView extends WatchUi.DataField {
     mWD.setNightMode((getBackgroundColor() == Graphics.COLOR_BLACK));
     mWD.clearDisplay(getBackgroundColor(), getBackgroundColor());
 
-    // @@ Show right metric
-
     var mainFontColor = null;
-    var wInfo = getShowInformation($._showInfoMain, $._showInfoHrFallback);
+    var wInfo = getShowInformation($._showInfoMain, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
     if (wInfo == null) {
       if (mWD.isNightMode()) {
         mainFontColor = Graphics.COLOR_WHITE;
@@ -82,7 +80,7 @@ class whatpowerView extends WatchUi.DataField {
     }
 
     var wInfoBottom =
-        getShowInformation($._showInfoBottom, $._showInfoHrFallback);
+        getShowInformation($._showInfoBottom, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
     if (wInfoBottom != null) {
       var value = wInfoBottom.formattedValue(mWD.field);
       var color = mainFontColor;
@@ -99,7 +97,7 @@ class whatpowerView extends WatchUi.DataField {
   }
 
   function drawAdditonalData(dc) {
-    var wInfoLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback);
+    var wInfoLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
     if (wInfoLeft != null) {
       var value = wInfoLeft.formattedValue(SmallField);
       var zone = wInfoLeft.zoneInfoValue();
@@ -109,7 +107,7 @@ class whatpowerView extends WatchUi.DataField {
     }
 
     var wInfoRight =
-        getShowInformation($._showInfoRight, $._showInfoHrFallback);
+        getShowInformation($._showInfoRight, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
     if (wInfoRight != null) {
       var value = wInfoRight.formattedValue(SmallField);
       var zone = wInfoRight.zoneInfoValue();

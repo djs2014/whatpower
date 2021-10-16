@@ -5,6 +5,7 @@ import Toybox.Lang;
 class WhatDisplay {
   hidden var dc;
   hidden var margin = 1;
+  hidden var backgroundColor = Graphics.COLOR_WHITE;
   hidden var nightMode = false;
 
   hidden var mFontLabel = Graphics.FONT_TINY;
@@ -17,8 +18,10 @@ class WhatDisplay {
 
   hidden var mFontLabelAdditional = Graphics.FONT_XTINY;
   hidden var mFontValueAdditionalIndex = 1;
-  hidden var mFontValueAdditional =
-      [ Graphics.FONT_SYSTEM_SMALL, Graphics.FONT_SYSTEM_MEDIUM, Graphics.FONT_SYSTEM_LARGE ];
+  hidden var mFontValueAdditional = [
+    Graphics.FONT_SYSTEM_SMALL, Graphics.FONT_SYSTEM_MEDIUM,
+    Graphics.FONT_SYSTEM_LARGE
+  ];
   hidden var _widthAdditionalInfo = 15;
 
   var width = 0;
@@ -58,7 +61,7 @@ class WhatDisplay {
     mFontValueAdditionalIndex = 2;
     if (isSmallField()) {
       _widthAdditionalInfo = _widthAdditionalInfo - 10.0f;
-      mFontValueAdditionalIndex = 1;    
+      mFontValueAdditionalIndex = 1;
     }
   }
   function onUpdate(dc as Dc) {
@@ -124,17 +127,17 @@ class WhatDisplay {
     if (isSmallField()) {
       fontValue = mFontValue;
     }
-    var wv = dc.getTextWidthInPixels(value, fontValue);
-    if (wv >= (dc.getWidth() - (4 * _widthAdditionalInfo))) {
+    var widthValue = dc.getTextWidthInPixels(value, fontValue);
+    if (widthValue >= (dc.getWidth() - (4 * _widthAdditionalInfo))) {
       fontValue = mFontValueSmall;
-      wv = dc.getTextWidthInPixels(value, fontValue);
+      widthValue = dc.getTextWidthInPixels(value, fontValue);
     }
 
     var hl = dc.getFontHeight(mFontLabel);
     var hv = dc.getFontHeight(fontValue);
     var yl = dc.getHeight() / 2 - hv + margin;  //(hv / 2) - 1;
-    var wp = dc.getTextWidthInPixels(units, mFontUnits);
-    var xv = dc.getWidth() / 2 - (wv + wp) / 2;
+    var widthUnits = dc.getTextWidthInPixels(units, mFontUnits);
+    var xv = dc.getWidth() / 2 - (widthValue + widthUnits) / 2;
 
     if (isSmallField()) {
       // label
@@ -150,9 +153,9 @@ class WhatDisplay {
                   Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     } else {
       // label
-      // var wl = dc.getTextWidthInPixels(label, mFontLabel);
-      // drawPercentageCircle(dc.getWidth() / 2 - wl / 2 - 7, yl + hl/2, 5,
-      // perc);
+      // var widthLabel = dc.getTextWidthInPixels(label, mFontLabel);
+      // drawPercentageCircle(dc.getWidth() / 2 - widthLabel / 2 - 7, yl + hl/2,
+      // 5, perc);
 
       dc.drawText(dc.getWidth() / 2, yl, mFontLabel, label,
                   Graphics.TEXT_JUSTIFY_CENTER);
@@ -160,7 +163,7 @@ class WhatDisplay {
       dc.drawText(xv, dc.getHeight() / 2, fontValue, value,
                   Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
 
-      dc.drawText(xv + wv + 1, dc.getHeight() / 2, mFontUnits, units,
+      dc.drawText(xv + widthValue + 1, dc.getHeight() / 2, mFontUnits, units,
                   Graphics.TEXT_JUSTIFY_LEFT);
     }
   }
@@ -170,18 +173,22 @@ class WhatDisplay {
 
     var wBottomBar = dc.getWidth() - (4 * _widthAdditionalInfo + margin);
 
-    var wl = dc.getTextWidthInPixels(label, mFontBottomLabel);
-    var wv = dc.getTextWidthInPixels(value, mFontBottomValue);
-    var wp = dc.getTextWidthInPixels(units, mFontUnits);
+    var widthLabel = dc.getTextWidthInPixels(label, mFontBottomLabel);
+    var widthValue = dc.getTextWidthInPixels(value, mFontBottomValue);
+    var widthUnits = dc.getTextWidthInPixels(units, mFontUnits);
 
     var marginleft1 = 2;
     var marginleft2 = 2;
     if (isSmallField()) {
       // no label
       marginleft1 = 0;
-      wl = 0;
+      widthLabel = 0;
     }
-    var wtot = wl + marginleft1 + wv + marginleft2 + wp;
+    var wtot = widthLabel + marginleft1 + widthValue + marginleft2 + widthUnits;
+    var drawUnits = (wtot < wBottomBar);
+    if (!drawUnits) {
+     wtot = widthLabel + marginleft1 + widthValue;
+    }
 
     var xv = dc.getWidth() / 2 - wtot / 2;
     var y = dc.getHeight() - (hv / 2);
@@ -212,13 +219,12 @@ class WhatDisplay {
     dc.drawText(xv, y, mFontBottomLabel, label,
                 Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
 
-    dc.drawText(xv + wl + marginleft1, y, mFontBottomValue, value,
+    dc.drawText(xv + widthLabel + marginleft1, y, mFontBottomValue, value,
                 Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
 
-    if (wtot < wBottomBar) {
-      // There is room for units
-      dc.drawText(xv + wl + marginleft1 + wv + marginleft2, y, mFontUnits,
-                  units,
+    if (drawUnits) {
+      dc.drawText(xv + widthLabel + marginleft1 + widthValue + marginleft2, y,
+                  mFontUnits, units,
                   Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
     }
   }
@@ -271,16 +277,19 @@ class WhatDisplay {
     dc.setColor(WhatColor.COLOR_WHITE_GRAY_1, Graphics.COLOR_TRANSPARENT);
     dc.fillCircle(x, y, width);
 
+    if (color == backgroundColor) {
+      color = WhatColor.COLOR_WHITE_GRAY_1;
+    }
     dc.setColor(color, Graphics.COLOR_TRANSPARENT);
     drawPercentageCircle(x, y, width, percentage);
   }
 
   hidden function getFontAdditionalInfo(maxwidth, value) {
     var font = mFontValueAdditional[mFontValueAdditionalIndex];
-    var wv = dc.getTextWidthInPixels(value, font);
-    
-    if (wv > maxwidth && mFontValueAdditionalIndex > 0) {
-      font = mFontValueAdditional[mFontValueAdditionalIndex - 1];      
+    var widthValue = dc.getTextWidthInPixels(value, font);
+
+    if (widthValue > maxwidth && mFontValueAdditionalIndex > 0) {
+      font = mFontValueAdditional[mFontValueAdditionalIndex - 1];
     }
     return font;
   }
@@ -293,8 +302,8 @@ class WhatDisplay {
     dc.drawText(x, y, fontValue, value,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     // label
-    var ha = dc.getFontHeight(fontLabel);    
-    y = y + width - ha /2 - 2;
+    var ha = dc.getFontHeight(fontLabel);
+    y = y + width - ha / 2 - 2;
     dc.drawText(x, y, fontLabel, label,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
   }

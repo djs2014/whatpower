@@ -50,7 +50,7 @@ class WhatBase {
       return Graphics.COLOR_WHITE;
     }
     if (percentage < 45) {
-      return WhatColor.COLOR_WHITE_3;
+      return WhatColor.COLOR_WHITE_GRAY_2;
     }
     if (percentage < 55) {
       return WhatColor.COLOR_WHITE_GRAY_3;
