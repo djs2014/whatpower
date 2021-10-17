@@ -15,7 +15,7 @@ class WhatHeading extends WhatBase {
   function setMinimalLocationAccuracy(minimalLocationAccuracy) {
     self.minimalLocationAccuracy = minimalLocationAccuracy;
   }
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     if (info has : currentHeading) {
       // skip 0 and null values
       if (info.currentHeading) {

@@ -90,6 +90,7 @@ class WhatInformation {
   var max = 0.0f;
   var objInstance = null;
 
+  var methodUpdateInfo;
   var methodGetZoneInfo;
   var methodGetUnits;
   var methodConvertToDisplayFormat;
@@ -100,11 +101,16 @@ class WhatInformation {
     self.max = max;
     self.objInstance = objInstance;
     if (objInstance != null) {
+      methodUpdateInfo = new Lang.Method(self.objInstance, : updateInfo);
       methodGetZoneInfo = new Lang.Method(self.objInstance, : getZoneInfo);
       methodGetUnits = new Lang.Method(self.objInstance, : getUnits);
       methodConvertToDisplayFormat = new Lang.Method(self.objInstance,
                                                      : convertToDisplayFormat);
     }
+  }
+
+  function updateInfo(info as Activity.Info) {
+    return methodUpdateInfo.invoke(info);
   }
 
   function zoneInfoValue() as ZoneInfo {

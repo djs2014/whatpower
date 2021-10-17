@@ -5,12 +5,6 @@ import Toybox.WatchUi;
 import Toybox.System;
 
 class whatpowerView extends WatchUi.DataField {
-  // hidden var mFontLabel = Graphics.FONT_TINY;
-  // hidden var mFontValue = Graphics.FONT_LARGE;
-  // hidden var mFontValueWideField = Graphics.FONT_NUMBER_MILD;
-  // hidden var mFontPostfix = Graphics.FONT_XTINY;
-  // hidden var mFontAdditional = Graphics.FONT_XTINY;
-  // hidden var mFontAdditionalLarger = Graphics.FONT_TINY;
   hidden var mWD;
 
   function initialize() {
@@ -27,20 +21,27 @@ class whatpowerView extends WatchUi.DataField {
   // Note that compute() and onUpdate() are asynchronous, and there is no
   // guarantee that compute() will be called before onUpdate().
   function compute(info as Activity.Info) as Void {
-    // @@ todo only calc if displayed
-    _wHeartrate.setCurrent(info);
-    _wPower.setCurrent(info);
-    _wCadence.setCurrent(info);
-    _wDistance.setCurrent(info);
-    _wAltitude.setCurrent(info);
-    _wGrade.setCurrent(info);
-    _wSpeed.setCurrent(info);
-    _wPowerressure.setCurrent(info);
-    _wCalories.setCurrent(info);
-    _wTrainingEffect.setCurrent(info);
-    _wTime.setCurrent(info);
-    _wHeading.setCurrent(info);
-    _wEngergyExpenditure.setCurrent(info);
+    $._wiMain = getShowInformation($._showInfoMain, $._showInfoHrFallback,
+                                   $._showInfoTrainingEffectFallback);
+    $._wiBottom = getShowInformation($._showInfoBottom, $._showInfoHrFallback,
+                                     $._showInfoTrainingEffectFallback);
+    $._wiLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback,
+                                   $._showInfoTrainingEffectFallback);
+    $._wiRight = getShowInformation($._showInfoRight, $._showInfoHrFallback,
+                                    $._showInfoTrainingEffectFallback);
+
+    if ($._wiMain != null) {
+      $._wiMain.updateInfo(info);
+    }
+    if ($._wiBottom != null) {
+      $._wiBottom.updateInfo(info);
+    }
+    if ($._wiLeft != null) {
+      $._wiLeft.updateInfo(info);
+    }
+    if ($._wiRight != null) {
+      $._wiRight.updateInfo(info);
+    }   
   }
 
   // Display the value you computed here. This will be called
@@ -50,10 +51,18 @@ class whatpowerView extends WatchUi.DataField {
     mWD.setNightMode((getBackgroundColor() == Graphics.COLOR_BLACK));
     mWD.clearDisplay(getBackgroundColor(), getBackgroundColor());
 
-    var mainFontColor = null;
-    var wInfo = getShowInformation($._showInfoMain, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
-    mWD.setShowMainCircle(wInfo != null);
-    if (wInfo == null) {
+    $._wiMain = getShowInformation($._showInfoMain, $._showInfoHrFallback,
+                                   $._showInfoTrainingEffectFallback);
+    $._wiBottom = getShowInformation($._showInfoBottom, $._showInfoHrFallback,
+                                     $._showInfoTrainingEffectFallback);
+    $._wiLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback,
+                                   $._showInfoTrainingEffectFallback);
+    $._wiRight = getShowInformation($._showInfoRight, $._showInfoHrFallback,
+                                    $._showInfoTrainingEffectFallback);
+
+    var mainFontColor = null;    
+    mWD.setShowMainCircle($._wiMain != null);
+    if ($._wiMain == null) {
       if (mWD.isNightMode()) {
         mainFontColor = Graphics.COLOR_WHITE;
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
@@ -63,11 +72,11 @@ class whatpowerView extends WatchUi.DataField {
       }
       drawAdditonalData(dc);
     } else {
-      var zone = wInfo.zoneInfoValue();
+      var zone = $._wiMain.zoneInfoValue();
       mainFontColor = zone.fontColor;
       mWD.clearDisplay(zone.fontColor, zone.color);
 
-      var avgZone = wInfo.zoneInfoAverage();
+      var avgZone = $._wiMain.zoneInfoAverage();
       var radius = dc.getHeight() / 2;
       if (mWD.isWideField()) {
         radius = radius + dc.getHeight() / 5;
@@ -76,44 +85,39 @@ class whatpowerView extends WatchUi.DataField {
 
       drawAdditonalData(dc);
 
-      var value = wInfo.formattedValue(mWD.field);  // @@ rename to fieldType
-      mWD.drawMainInfo(zone.fontColor, zone.name, value, wInfo.units());
+      var value = $._wiMain.formattedValue(mWD.field);  // @@ rename to fieldType
+      mWD.drawMainInfo(zone.fontColor, zone.name, value, $._wiMain.units());
     }
-
-    var wInfoBottom =
-        getShowInformation($._showInfoBottom, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
-    if (wInfoBottom != null) {
-      var value = wInfoBottom.formattedValue(mWD.field);
+    
+    if ($._wiBottom != null) {
+      var value = $._wiBottom.formattedValue(mWD.field);
       var color = mainFontColor;
       var backColor = null;
-      var zone = wInfoBottom.zoneInfoValue();
+      var zone = $._wiBottom.zoneInfoValue();
       var label = zone.name;  // @@ should be short
 
       color = zone.fontColor;
       backColor = zone.color;
 
-      mWD.drawBottomInfo(color, label, value, wInfoBottom.units(), backColor,
+      mWD.drawBottomInfo(color, label, value, $._wiBottom.units(), backColor,
                          zone.perc);
     }
   }
 
   function drawAdditonalData(dc) {
-    var wInfoLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
-    if (wInfoLeft != null) {
-      var value = wInfoLeft.formattedValue(SmallField);
-      var zone = wInfoLeft.zoneInfoValue();
-      var avgZone = wInfoLeft.zoneInfoAverage();
-      mWD.drawLeftInfo(zone.fontColor, value, zone.color, wInfoLeft.units(),
+    if ($._wiLeft != null) {
+      var value = $._wiLeft.formattedValue(SmallField);
+      var zone = $._wiLeft.zoneInfoValue();
+      var avgZone = $._wiLeft.zoneInfoAverage();
+      mWD.drawLeftInfo(zone.fontColor, value, zone.color, $._wiLeft.units(),
                        avgZone.color, zone.perc);
     }
 
-    var wInfoRight =
-        getShowInformation($._showInfoRight, $._showInfoHrFallback, $._showInfoTrainingEffectFallback);
-    if (wInfoRight != null) {
-      var value = wInfoRight.formattedValue(SmallField);
-      var zone = wInfoRight.zoneInfoValue();
-      var avgZone = wInfoRight.zoneInfoAverage();
-      mWD.drawRightInfo(zone.fontColor, value, zone.color, wInfoRight.units(),
+    if ($._wiRight != null) {
+      var value = $._wiRight.formattedValue(SmallField);
+      var zone = $._wiRight.zoneInfoValue();
+      var avgZone = $._wiRight.zoneInfoAverage();
+      mWD.drawRightInfo(zone.fontColor, value, zone.color, $._wiRight.units(),
                         avgZone.color, zone.perc);
     }
   }

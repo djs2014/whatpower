@@ -27,7 +27,7 @@ class WhatCadence extends WhatBase {
     return self.maxCadence;
   }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     activityPaused = activityIsPaused(info);
     if (info has : currentCadence) {
       if (info.currentCadence) {

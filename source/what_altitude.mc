@@ -10,7 +10,7 @@ class WhatAltitude extends WhatBase {
 
   function initialize() { WhatBase.initialize(); }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     if (info has : altitude) {
       previousAltitude = currentAltitude;
       if (info.altitude) {

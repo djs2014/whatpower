@@ -12,7 +12,7 @@ class WhatCalories extends WhatBase {
     self.targetCalories = targetCalories;
   }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     if (info has : calories) {
       if (info.calories) {
         // speed is in meters per second

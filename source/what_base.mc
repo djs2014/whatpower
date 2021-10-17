@@ -13,7 +13,7 @@ class WhatBase {
   function isAvailable() { return available; }
   function setFieldType(fieldType) { self.fieldType = fieldType; }
   
-  function setCurrent(info as Activity.Info) {}
+  function updateInfo(info as Activity.Info) {}
   function activityIsPaused(info as Activity.Info) {
     if (info has : timerState) {
       return info.timerState == Activity.TIMER_STATE_PAUSED;

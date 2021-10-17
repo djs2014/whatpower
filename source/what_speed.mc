@@ -25,7 +25,7 @@ class WhatSpeed extends WhatBase {
     return self.maxSpeed;
   }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     available = false;
     activityPaused = activityIsPaused(info);
     if (info has : currentSpeed) {

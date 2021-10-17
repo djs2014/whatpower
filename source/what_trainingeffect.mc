@@ -8,7 +8,7 @@ class WhatTrainingEffect extends WhatBase {
 
   function initialize() { WhatBase.initialize(); }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     available = false;
     if (info has : trainingEffect) {
       if (info.trainingEffect) {

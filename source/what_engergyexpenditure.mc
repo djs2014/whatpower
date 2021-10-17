@@ -12,7 +12,7 @@ class WhatEngergyExpenditure extends WhatBase {
     self.targetEngergyExpenditure = targetEngergyExpenditure;
   }
 
-  function setCurrent(info as Activity.Info) {    
+  function updateInfo(info as Activity.Info) {    
     if (info has : energyExpenditure) {
       if (info.energyExpenditure) {
         energyExpenditure = info.energyExpenditure;

@@ -12,7 +12,7 @@ class WhatDistance extends WhatBase {
     self.targetDistance = targetDistance;
   }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     if (info has : elapsedDistance) {
       if (info.elapsedDistance) {
         self.elapsedDistance = info.elapsedDistance / 1000.0;

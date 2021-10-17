@@ -25,7 +25,7 @@ class WhatPressure extends WhatBase {
 
   function isSeaLevelPressure() { return showSeaLevelPressure; }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     if (info has : ambientPressure) {
       available = true;
       if (info.ambientPressure) {

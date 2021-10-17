@@ -2,6 +2,11 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
+var _wiMain as WhatInformation;
+var _wiLeft as WhatInformation;
+var _wiRight as WhatInformation;
+var _wiBottom as WhatInformation;
+
 var _wPower as WhatPower;
 var _wHeartrate as WhateHeartrate;
 var _wCadence as WhatCadence;
@@ -70,7 +75,7 @@ class whatpowerApp extends Application.AppBase {
             getNumberProperty("showInfoHrFallback", ShowInfoCalories);
         $._showInfoTrainingEffectFallback = getNumberProperty(
             "showInfoTrainingEffectFallback", ShowInfoEnergyExpenditure);
-
+                
         _wPower.setFtp(getNumberProperty("ftpValue", 200));
         _wPower.setPerSec(getNumberProperty("powerPerSecond", 3));
 

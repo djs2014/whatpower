@@ -32,7 +32,7 @@ class WhatPower extends WhatBase {
   }
 
   // called once per second
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     available = false;
     activityPaused = activityIsPaused(info);
 

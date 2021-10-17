@@ -24,7 +24,7 @@ class WhateHeartrate extends WhatBase {
     return maxHeartRate;
   }
 
-  function setCurrent(info as Activity.Info) {
+  function updateInfo(info as Activity.Info) {
     available = false;
     if (info has : currentHeartRate) {
       if (info.currentHeartRate) {
