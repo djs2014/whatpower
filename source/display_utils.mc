@@ -64,7 +64,7 @@ class WhatDisplay {
     // 2 fields: w[246] h[160]
     // 3 fields: w[246] h[106]
     if (showMainCircle) {
-      _widthAdditionalInfo = 31.0f;
+      _widthAdditionalInfo = 33.0f;
       mFontValueAdditionalIndex = 2;
       if (isSmallField()) {
         _widthAdditionalInfo = _widthAdditionalInfo - 10.0f;
@@ -152,7 +152,7 @@ class WhatDisplay {
     var hv = dc.getFontHeight(fontValue);
     var yl = dc.getHeight() / 2 - hv + margin;
     var widthUnits = dc.getTextWidthInPixels(units, mFontUnits);
-    var xv = dc.getWidth() / 2 - (widthValue + widthUnits) / 2;
+    var xv = dc.getWidth() / 2 - (widthValue) / 2; //dc.getWidth() / 2 - (widthValue + widthUnits) / 2;
 
     if (isSmallField()) {
       // label
@@ -187,7 +187,7 @@ class WhatDisplay {
     var hv = dc.getFontHeight(mFontBottomValue);
 
     var wBottomBar =
-        dc.getWidth() - (4 * _widthAdditionalInfo) + marginLeft + marginRight;
+        dc.getWidth() - (3 * _widthAdditionalInfo) + marginLeft + marginRight;
 
     var widthLabel = dc.getTextWidthInPixels(label, mFontBottomLabel);
     var widthValue = dc.getTextWidthInPixels(value, mFontBottomValue);

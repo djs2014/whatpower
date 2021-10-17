@@ -1,10 +1,8 @@
-1 only calc when shown
-var wBaseLeft = get ..
-- wBaseLeft.update()
-etc.
-2 center main circle
-3 2 fields -> triangle bottom
+x only calc when shown
+
 4 left/right - font after digit smaller => so font stays larger see speed.
+2 center main circle @@ pressure too long ??
+3 2 fields -> triangle bottom
 
 
 when no movement -> use heading compass not gps data (should move 1 meter?)

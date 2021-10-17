@@ -4,7 +4,7 @@ import Toybox.Activity;
 
 class WhatTrainingEffect extends WhatBase {
   hidden var trainingEffect = 0;
-  hidden var targetEffect = 4.0f;
+  hidden var targetEffect = 4.5f;
 
   function initialize() { WhatBase.initialize(); }
 
@@ -58,8 +58,8 @@ class WhatTrainingEffect extends WhatBase {
       return new ZoneInfo(3, "Maintaining", WhatColor.COLOR_WHITE_YELLOW_3,
                           Graphics.COLOR_BLACK, percOfTarget);
     }
-    if (effect < 4) {
-      return new ZoneInfo(3, "Improving", WhatColor.COLOR_WHITE_ORANGE_3,
+    if (effect < 4) { // Improving
+      return new ZoneInfo(3, "Highly improving", WhatColor.COLOR_WHITE_ORANGE_3,
                           Graphics.COLOR_BLACK, percOfTarget);
     }
     if (effect < 5) {

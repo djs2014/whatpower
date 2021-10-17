@@ -86,6 +86,6 @@ class WhatAltitude extends WhatBase {
     }
 
     return new ZoneInfo(7, "Altitude", Graphics.COLOR_WHITE,
-                        Graphics.COLOR_BLACK, distance);
+                        Graphics.COLOR_BLACK, 0);
   }
 }
