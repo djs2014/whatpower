@@ -87,6 +87,8 @@ class whatpowerApp extends Application.AppBase {
         _wCalories.setTargetCalories(getNumberProperty("targetCalories", 2000));
         _wEngergyExpenditure.setTargetEngergyExpenditure(
             getNumberProperty("targetEnergyExpenditure", 15));
+        _wHeading.setMinimalLocationAccuracy(
+            getNumberProperty("minimalLocationAccuracy", 2));
 
         System.println("Settings loaded");
       } catch (ex) {

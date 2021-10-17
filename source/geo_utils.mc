@@ -60,49 +60,49 @@ function getCompassDirection(bearing) {
   // Round and convert to number (1.00000 -> 1)
   switch (Math.round(bearing / 22.5).toNumber()) {
     case 1:
-      direction = "Nne";
+      direction = "NNE";
       break;
     case 2:
       direction = "NE";
       break;
     case 3:
-      direction = "Ene";
+      direction = "ENE";
       break;
     case 4:
       direction = "E";
       break;
     case 5:
-      direction = "Ese";
+      direction = "ESE";
       break;
     case 6:
       direction = "SE";
       break;
     case 7:
-      direction = "Sse";
+      direction = "SSE";
       break;
     case 8:
       direction = "S";
       break;
     case 9:
-      direction = "Ssw";
+      direction = "SSW";
       break;
     case 10:
       direction = "SW";
       break;
     case 11:
-      direction = "Wsw";
+      direction = "WSW";
       break;
     case 12:
       direction = "W";
       break;
     case 13:
-      direction = "Wnw";
+      direction = "WNW";
       break;
     case 14:
       direction = "NW";
       break;
     case 15:
-      direction = "Nnw";
+      direction = "NNW";
       break;
     default:
       direction = "N";

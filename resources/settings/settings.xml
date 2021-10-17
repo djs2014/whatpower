@@ -137,5 +137,8 @@
 	<setting propertyKey="@Properties.targetEnergyExpenditure" title="@Strings.TargetEnergyExpenditure">
 		<settingConfig type="numeric" min="0" />
 	</setting>	
+	<setting propertyKey="@Properties.minimalLocationAccuracy" title="@Strings.MinimalLocationAccuracy">
+		<settingConfig type="numeric" min="0" max="4"/>
+	</setting>	
 	
 </settings>

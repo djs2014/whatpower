@@ -12,7 +12,9 @@ class WhatHeading extends WhatBase {
   hidden var minimalLocationAccuracy = 1;
 
   function initialize() { WhatBase.initialize(); }
-
+  function setMinimalLocationAccuracy(minimalLocationAccuracy) {
+    self.minimalLocationAccuracy = minimalLocationAccuracy;
+  }
   function setCurrent(info as Activity.Info) {
     if (info has : currentHeading) {
       // skip 0 and null values
@@ -49,7 +51,12 @@ class WhatHeading extends WhatBase {
 
   function getUnitsLong() as String { return ""; }
 
-  function getUnits() as String { return ""; }
+  function getUnits() as String { 
+    if (!currentLocationAccuracy) {
+      return currentLocationAccuracy.format("%0.0f");  // @@ TEST
+    } 
+    return "";
+  }
 
   function getFormatString(fieldType) as String {
     switch (fieldType) {
