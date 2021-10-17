@@ -1,3 +1,5 @@
+only calc when shown
+barrel
 icons for heartrate etc.
 activity pause -> show avg ex. calories/elapsed time
     power
@@ -5,7 +7,6 @@ activity pause -> show avg ex. calories/elapsed time
     cadence
     -> show label or icon on left/right if paused
 altitude show arrows up/down instead of ++--    
-
 
 heading using lat lon
 heading using lat/lng a and b 

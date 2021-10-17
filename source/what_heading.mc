@@ -4,37 +4,46 @@ import Toybox.Activity;
 
 class WhatHeading extends WhatBase {
   hidden var calculatedHeading = null;
-  hidden var track = 0;
+  hidden var currentHeading = 0;
 
   hidden var previousLocation = null;
   hidden var currentLocation = null;
-  hidden var usePosition = true;
+  hidden var currentLocationAccuracy = 0;
+  hidden var minimalLocationAccuracy = 1;
 
   function initialize() { WhatBase.initialize(); }
-  
+
   function setCurrent(info as Activity.Info) {
-    if (info has : track) {
+    if (info has : currentHeading) {
       // skip 0 and null values
-      if (info.track) {
-        track = info.track;
+      if (info.currentHeading) {
+        currentHeading = info.currentHeading;
       }
-      //System.println(track);
+      // System.println(currentHeading);
     }
 
     if (info has : currentLocation) {
       if (info.currentLocation) {
         previousLocation = currentLocation;
         currentLocation = info.currentLocation;
-        //System.println("loc: " +  currentLocation.toDegrees());
+        // System.println("loc: " +  currentLocation.toDegrees());
       }
+    }
+
+    if (info has : currentLocationAccuracy) {
+      currentLocationAccuracy = 0;
+      if (info.currentLocationAccuracy) {
+        currentLocationAccuracy = info.currentLocationAccuracy;
+      }
+      // System.println("currentLocationAccuracy: " +  currentLocationAccuracy);
     }
   }
 
   function getCurrentHeading() {
-    if (usePosition) {
+    if (currentLocationAccuracy >= minimalLocationAccuracy) {
       return self.calculatedHeading;
     } else {
-      return self.track;
+      return self.currentHeading;
     }
   }
 
@@ -55,11 +64,11 @@ class WhatHeading extends WhatBase {
 
   function convertToDisplayFormat(value, fieldType) as string {
     var degrees = null;
-    if (usePosition) {
+    if (currentLocationAccuracy >= minimalLocationAccuracy) {
       degrees = getCalculatedHeading();
     } else {
-      if (track != null) {
-        degrees = rad2deg(track);
+      if (currentHeading != null) {
+        degrees = rad2deg(currentHeading);
       }
     }
     if (degrees == null) {
