@@ -27,6 +27,7 @@ class WhatSpeed extends WhatBase {
 
   function setCurrent(info as Activity.Info) {
     available = false;
+    activityPaused = activityIsPaused(info);
     if (info has : currentSpeed) {
       available = true;
       if (info.currentSpeed) {
@@ -54,6 +55,10 @@ class WhatSpeed extends WhatBase {
   }
 
   function getCurrentSpeed() {
+    if (activityPaused) {
+      return getAverageSpeed();
+    }
+
     if (currentSpeed == null) {
       return 0;
     }
@@ -84,6 +89,11 @@ class WhatSpeed extends WhatBase {
   }
 
   function getZoneInfo(speed) {
+    if (activityPaused) {
+      return new ZoneInfo(0, "Avg. Speed", Graphics.COLOR_WHITE,
+                          Graphics.COLOR_BLACK, 0);  
+    }
+    
     if (speed == null || speed == 0) {
       return new ZoneInfo(0, "Speed", Graphics.COLOR_WHITE,
                           Graphics.COLOR_BLACK, 0);

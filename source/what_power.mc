@@ -65,8 +65,7 @@ class WhatPower extends WhatBase {
       dataPerSec = dataPerSec.slice(1, perSec);
     }
 
-    dataPerSec.add(power);
-    // System.println("power " + power);
+    dataPerSec.add(power);    
   }
 
   function powerPerX() {

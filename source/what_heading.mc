@@ -3,24 +3,39 @@ import Toybox.System;
 import Toybox.Activity;
 
 class WhatHeading extends WhatBase {
-  hidden var currentHeading = 0;
+  hidden var calculatedHeading = null;
+  hidden var track = 0;
+
+  hidden var previousLocation = null;
+  hidden var currentLocation = null;
+  hidden var usePosition = true;
 
   function initialize() { WhatBase.initialize(); }
-
+  
   function setCurrent(info as Activity.Info) {
-    if (info has : currentHeading) {
+    if (info has : track) {
       // skip 0 and null values
-      if (info.currentHeading) {
-        currentHeading = info.currentHeading;
+      if (info.track) {
+        track = info.track;
+      }
+      //System.println(track);
+    }
+
+    if (info has : currentLocation) {
+      if (info.currentLocation) {
+        previousLocation = currentLocation;
+        currentLocation = info.currentLocation;
+        //System.println("loc: " +  currentLocation.toDegrees());
       }
     }
   }
 
   function getCurrentHeading() {
-    if (currentHeading == null) {
-      return 0;
+    if (usePosition) {
+      return self.calculatedHeading;
+    } else {
+      return self.track;
     }
-    return self.currentHeading;
   }
 
   function getUnitsLong() as String { return ""; }
@@ -39,12 +54,33 @@ class WhatHeading extends WhatBase {
   }
 
   function convertToDisplayFormat(value, fieldType) as string {
-    if (value == null) {
+    var degrees = null;
+    if (usePosition) {
+      degrees = getCalculatedHeading();
+    } else {
+      if (track != null) {
+        degrees = rad2deg(track);
+      }
+    }
+    if (degrees == null) {
       return "";
     }
 
-    var degrees = rad2deg(value);
     return getCompassDirection(degrees);
+  }
+
+  function getCalculatedHeading() {
+    if (previousLocation == null || currentLocation == null) {
+      return null;
+    }
+
+    var llFrom = previousLocation.toDegrees();
+    var lat1 = llFrom[0];
+    var lon1 = llFrom[1];
+    var llTo = currentLocation.toDegrees();
+    var lat2 = llTo[0];
+    var lon2 = llTo[1];
+    return getRhumbLineBearing(lat1, lon1, lat2, lon2);
   }
 
   function getZoneInfo(rpm) {

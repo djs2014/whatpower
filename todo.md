@@ -1,10 +1,18 @@
+icons for heartrate etc.
+activity pause -> show avg ex. calories/elapsed time
+    power
+    speed
+    cadence
+    -> show label or icon on left/right if paused
+altitude show arrows up/down instead of ++--    
+
+
+heading using lat lon
+heading using lat/lng a and b 
 bigger fonts left right
 hide main ==> left/right then bigger
 option hide left/right values on small field
 
-icons for heartrate etc.
-heading using lat/lng a and b 
-activity pause -> show avg ex. calories/elapsed time
 teffect fall back hr+te == 0
 distance label
 label main / bottom
