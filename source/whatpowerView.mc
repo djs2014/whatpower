@@ -22,13 +22,13 @@ class whatpowerView extends WatchUi.DataField {
   // guarantee that compute() will be called before onUpdate().
   function compute(info as Activity.Info) as Void {
     $._wiMain = getShowInformation($._showInfoMain, $._showInfoHrFallback,
-                                   $._showInfoTrainingEffectFallback);
+                                   $._showInfoTrainingEffectFallback, info);
     $._wiBottom = getShowInformation($._showInfoBottom, $._showInfoHrFallback,
-                                     $._showInfoTrainingEffectFallback);
+                                     $._showInfoTrainingEffectFallback, info);
     $._wiLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback,
-                                   $._showInfoTrainingEffectFallback);
+                                   $._showInfoTrainingEffectFallback, info);
     $._wiRight = getShowInformation($._showInfoRight, $._showInfoHrFallback,
-                                    $._showInfoTrainingEffectFallback);
+                                    $._showInfoTrainingEffectFallback, info);
 
     if ($._wiMain != null) {
       $._wiMain.updateInfo(info);
@@ -52,13 +52,13 @@ class whatpowerView extends WatchUi.DataField {
     mWD.clearDisplay(getBackgroundColor(), getBackgroundColor());
 
     $._wiMain = getShowInformation($._showInfoMain, $._showInfoHrFallback,
-                                   $._showInfoTrainingEffectFallback);
+                                   $._showInfoTrainingEffectFallback, null);
     $._wiBottom = getShowInformation($._showInfoBottom, $._showInfoHrFallback,
-                                     $._showInfoTrainingEffectFallback);
+                                     $._showInfoTrainingEffectFallback, null);
     $._wiLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback,
-                                   $._showInfoTrainingEffectFallback);
+                                   $._showInfoTrainingEffectFallback, null);
     $._wiRight = getShowInformation($._showInfoRight, $._showInfoHrFallback,
-                                    $._showInfoTrainingEffectFallback);
+                                    $._showInfoTrainingEffectFallback, null);
 
     var mainFontColor = null;    
     mWD.setShowMainCircle($._wiMain != null);

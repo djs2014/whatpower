@@ -22,16 +22,20 @@ enum {
 }
 
 function
-getShowInformation(showInfo, showInfoHrFallback,
-                   showInfoTrainingEffectFallback) as WhatInformation {
+getShowInformation(showInfo, showInfoHrFallback, showInfoTrainingEffectFallback,
+                   info as Activity.Info) as WhatInformation {
   // System.println("showInfo: " + showInfo);
   switch (showInfo) {
     case ShowInfoPower:
       return new WhatInformation(_wPower.powerPerX(), _wPower.getAveragePower(),
                                  _wPower.getMaxPower(), _wPower);
     case ShowInfoHeartrate:
+      if (info != null) {
+        _wHeartrate.updateInfo(info);
+      }
       if (!_wHeartrate.isAvailable() && showInfoHrFallback != ShowInfoNothing) {
-        return getShowInformation(showInfoHrFallback, ShowInfoNothing,ShowInfoNothing);
+        return getShowInformation(showInfoHrFallback, ShowInfoNothing,
+                                  ShowInfoNothing, null);
       }
       return new WhatInformation(_wHeartrate.getCurrentHeartrate(),
                                  _wHeartrate.getAverageHeartrate(),
@@ -68,10 +72,13 @@ getShowInformation(showInfo, showInfoHrFallback,
       return new WhatInformation(_wAltitude.getTotalDescent(), 0, 0,
                                  _wAltitude);
     case ShowInfoTrainingEffect:
+      if (info != null) {
+        _wTrainingEffect.updateInfo(info);
+      }
       if (!_wTrainingEffect.isAvailable() &&
           showInfoTrainingEffectFallback != ShowInfoNothing) {
         return getShowInformation(showInfoTrainingEffectFallback,
-                                  ShowInfoNothing,ShowInfoNothing);
+                                  ShowInfoNothing, ShowInfoNothing, null);
       }
       return new WhatInformation(_wTrainingEffect.getTrainingEffect(), 0, 0,
                                  _wTrainingEffect);
