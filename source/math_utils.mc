@@ -1,4 +1,5 @@
 import Toybox.System;
+using Toybox.Math;
 
 function min(a as Lang.Number, b as Lang.Number) {
   if (a <= b) {
@@ -28,7 +29,23 @@ function compareTo(numberA, numberB) {
 
 function percentageOf(value, max) {
   if (max == 0 || max < 0) {
-    return 0;
+    return 0.0f;
   }
   return value / (max / 100.0);
+}
+
+// straight line formula y = slope * x + b;
+function slopeOfLine(x1, y1, x2, y2) {
+  var rise_deltaY = y2 - y1;
+  var run_deltaX = x2 - x1;
+  if (run_deltaX == 0.0) {
+    return 0.0f;
+  }
+  // integer division  * 1.0
+  return (rise_deltaY.toFloat() / run_deltaX.toFloat() ) ;
+}
+
+function angleInDegreesBetweenXaxisAndLine(x1, y1, x2, y2) {
+  var angleRadians = Math.atan2(y2 - y1, x2 - x1);
+  return rad2deg(angleRadians);
 }

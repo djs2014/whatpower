@@ -34,7 +34,7 @@ class WhatGrade extends WhatBase {
       var rise = currentAltitude - previousAltitude;
       var run = elapsedDistance - previousElapsedDistance;
       if (run != 0) {
-        grade = (rise / run) * 100.0;
+        grade = (rise.toFloat() / run.toFloat()) * 100.0;
       }
     }
     // System.println("alt: " + currentAltitude + " dist: " + elapsedDistance);
@@ -82,11 +82,11 @@ class WhatGrade extends WhatBase {
     distance = grade;
     if (distance == null || distance == 0) {
       return new ZoneInfo(0, "Grade", Graphics.COLOR_WHITE,
-                          Graphics.COLOR_BLACK, 0);
+                          Graphics.COLOR_BLACK, 0, null);
     }
     var color = getGradeColor(grade);
 
-    return new ZoneInfo(0, "Grade", color, Graphics.COLOR_BLACK, 0);
+    return new ZoneInfo(0, "Grade", color, Graphics.COLOR_BLACK, 0, null);
   }
 
   hidden function getGradeColor(grade) {

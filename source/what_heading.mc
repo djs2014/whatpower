@@ -101,6 +101,6 @@ class WhatHeading extends WhatBase {
 
   function getZoneInfo(rpm) {
     return new ZoneInfo(0, "Heading", Graphics.COLOR_WHITE,
-                        Graphics.COLOR_BLACK, 0);
+                        Graphics.COLOR_BLACK, 0, null);
   }
 }

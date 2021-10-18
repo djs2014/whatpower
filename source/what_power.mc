@@ -101,46 +101,50 @@ class WhatPower extends WhatBase {
   function getZoneInfo(ppx) as ZoneInfo {
     if (activityPaused) {
        return new ZoneInfo(0, "Avg. Power",
-                          Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0);
+                          Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0, null);
     }
 
     if (ppx == null || ppx == 0) {
       return new ZoneInfo(0, "Power (" + getUnitsLong() + ")",
-                          Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0);
+                          Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0, null);
     }
     var percOfTarget = percentageOf(ppx, ftp);
     var color = percentageToColor(percOfTarget);
+    var color100perc = null;
+    if (percOfTarget>100){
+      color100perc = percentageToColor(100);
+    }
 
     if (percOfTarget <= 54) {
       return new ZoneInfo(1, "Recovery", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (percOfTarget <= 75) {
       return new ZoneInfo(2, "Endurance", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (percOfTarget <= 87) {
       return new ZoneInfo(3, "Tempo", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (percOfTarget <= 94) {
       return new ZoneInfo(3, "Sweet spot", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (percOfTarget <= 105) {
       return new ZoneInfo(4, "Threshold", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (percOfTarget <= 120) {
       return new ZoneInfo(5, "VO2 Max", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (percOfTarget <= 150) {
       return new ZoneInfo(6, "Anaerobic", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
 
     return new ZoneInfo(7, "Neuromuscular", color, Graphics.COLOR_BLACK,
-                        percOfTarget);
+                        percOfTarget, color100perc);
   }
 }

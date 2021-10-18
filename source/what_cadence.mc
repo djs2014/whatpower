@@ -70,44 +70,48 @@ class WhatCadence extends WhatBase {
   function getZoneInfo(rpm) {
     if (activityPaused) {
       return new ZoneInfo(0, "Avg. Cadence", Graphics.COLOR_WHITE,
-                          Graphics.COLOR_BLACK, 0);
+                          Graphics.COLOR_BLACK, 0, null);
     }
     if (rpm == null || rpm == 0) {
       return new ZoneInfo(0, "Cadence", Graphics.COLOR_WHITE,
-                          Graphics.COLOR_BLACK, 0);
+                          Graphics.COLOR_BLACK, 0, null);
     }
     var percOfTarget = percentageOf(rpm, targetCadence);
     var color = percentageToColor(percOfTarget);
-
+    var color100perc = null;
+    if (percOfTarget > 100) {
+      color100perc = percentageToColor(100);
+    }
     if (rpm < 65) {
       return new ZoneInfo(1, "Grinding", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (rpm < 75) {
       return new ZoneInfo(2, "Recreational", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (rpm < 85) {
-      return new ZoneInfo(3, "Tempo", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+      return new ZoneInfo(3, "Tempo", color, Graphics.COLOR_BLACK, percOfTarget,
+                          color100perc);
     }
     if (rpm < 95) {
-      return new ZoneInfo(3, "Racer", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+      return new ZoneInfo(3, "Racer", color, Graphics.COLOR_BLACK, percOfTarget,
+                          color100perc);
     }
     if (rpm < 105) {
       return new ZoneInfo(4, "Spinning", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (rpm < 115) {
       return new ZoneInfo(5, "Attack", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
     if (rpm < 125) {
       return new ZoneInfo(6, "Sprint", color, Graphics.COLOR_BLACK,
-                          percOfTarget);
+                          percOfTarget, color100perc);
     }
 
-    return new ZoneInfo(7, "Super", color, Graphics.COLOR_BLACK, percOfTarget);
+    return new ZoneInfo(7, "Super", color, Graphics.COLOR_BLACK, percOfTarget,
+                        color100perc);
   }
 }

@@ -42,7 +42,7 @@ class WhatTime extends WhatBase {
   function getZoneInfo(value) as ZoneInfo {
     var label = now.day + "-" + now.month;
     var percentage = 0;
-    return new ZoneInfo(0, label, Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, percentage);
+    return new ZoneInfo(0, label, Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, percentage, null);
   }
 
   

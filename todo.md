@@ -3,7 +3,7 @@ x only calc when shown
 4 left/right - font after digit smaller => so font stays larger see speed.
 2 center main circle @@ pressure too long ??
 3 2 fields -> triangle bottom
-
+add check symbol when target reached
 
 when no movement -> use heading compass not gps data (should move 1 meter?)
 barrel
@@ -164,3 +164,23 @@ if color only -> symbol in circle power / hr/ cadence etc
     draw addcircle info (position left, right, etc) + avg?
     draw sub info (below main)
 
+
+https://www.mathopenref.com/coordintersection.html
+
+var p1 = {
+	x: 20,
+	y: 20
+};
+
+var p2 = {
+	x: 40,
+	y: 40
+};
+
+// angle in radians angle between x-axis and line 1
+var angleRadians = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+
+// angle in degrees
+var angleDeg = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+
+Angle between line 1 and line 2 = A - B

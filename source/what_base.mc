@@ -25,7 +25,7 @@ class WhatBase {
   // }
 
   function getZoneInfo(value) as ZoneInfo {
-    return new ZoneInfo(0, "", Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0);
+    return new ZoneInfo(0, "", Graphics.COLOR_WHITE, Graphics.COLOR_BLACK, 0, null);
   }
 
   function getUnits() as String { return ""; }
@@ -83,6 +83,9 @@ class WhatBase {
     if (percentage < 95) {
       return WhatColor.COLOR_WHITE_ORANGE_3;
     }
+    if (percentage == 100) {
+      return WhatColor.COLOR_WHITE_ORANGERED_2; // @@ diff color? _4
+    }    
     if (percentage < 105) {
       return WhatColor.COLOR_WHITE_ORANGERED_3;
     }

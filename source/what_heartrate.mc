@@ -8,7 +8,7 @@ class WhateHeartrate extends WhatBase {
   hidden var maxHeartRate = 0;
   hidden var hrZones;
 
-   function initialize() { WhatBase.initialize(); }
+  function initialize() { WhatBase.initialize(); }
 
   function getAverageHeartrate() {
     if (avarageHeartrate == null) {
@@ -74,28 +74,38 @@ class WhateHeartrate extends WhatBase {
   function getZoneInfo(hr) as ZoneInfo {
     if (hrZones == null || hrZones.size() == 0 || hr == 0 || hr < hrZones[0]) {
       return new ZoneInfo(0, "Heartrate", Graphics.COLOR_WHITE,
-                          Graphics.COLOR_BLACK, 0);
+                          Graphics.COLOR_BLACK, 0, null);
     }
 
     var percOfTarget = percentageOf(hr, hrZones[5]);
     var color = percentageToColor(percOfTarget);
+    var color100perc = null;
+    if (percOfTarget > 100) {
+      color100perc = percentageToColor(100);
+    }
 
     if (hr < hrZones[1]) {
-      return new ZoneInfo(1, "Very light", color, Graphics.COLOR_BLACK, percOfTarget);
+      return new ZoneInfo(1, "Very light", color, Graphics.COLOR_BLACK,
+                          percOfTarget, color100perc);
     }
     if (hr < hrZones[2]) {
-      return new ZoneInfo(2, "Light", color, Graphics.COLOR_BLACK, percOfTarget);
+      return new ZoneInfo(2, "Light", color, Graphics.COLOR_BLACK, percOfTarget,
+                          color100perc);
     }
     if (hr < hrZones[3]) {
-      return new ZoneInfo(3, "Moderate", color, Graphics.COLOR_BLACK, percOfTarget);
+      return new ZoneInfo(3, "Moderate", color, Graphics.COLOR_BLACK,
+                          percOfTarget, color100perc);
     }
     if (hr < hrZones[4]) {
-      return new ZoneInfo(4, "Hard", color, Graphics.COLOR_BLACK, percOfTarget);
+      return new ZoneInfo(4, "Hard", color, Graphics.COLOR_BLACK, percOfTarget,
+                          color100perc);
     }
     if (hr < hrZones[5]) {
-      return new ZoneInfo(5, "Maximum", color, Graphics.COLOR_BLACK, percOfTarget);
+      return new ZoneInfo(5, "Maximum", color, Graphics.COLOR_BLACK,
+                          percOfTarget, color100perc);
     }
 
-    return new ZoneInfo(6, "Extreme", color, Graphics.COLOR_BLACK, percOfTarget);
+    return new ZoneInfo(6, "Extreme", color, Graphics.COLOR_BLACK, percOfTarget,
+                        color100perc);
   }
 }

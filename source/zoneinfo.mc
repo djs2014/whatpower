@@ -4,12 +4,14 @@ class ZoneInfo {
   var color;
   var fontColor;
   var perc;
-  
-  function initialize(zone, name, color, fontColor, perc) {
+  var color100perc;
+
+  function initialize(zone, name, color, fontColor, perc, color100perc) {
     self.zone = zone;
     self.name = name;
     self.color = color;
     self.fontColor = fontColor;
     self.perc = perc;
+    self.color100perc = color100perc;
   }
 }

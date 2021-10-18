@@ -81,7 +81,7 @@ class whatpowerView extends WatchUi.DataField {
       if (mWD.isWideField()) {
         radius = radius + dc.getHeight() / 5;
       }
-      mWD.drawMainInfoCircle(radius, avgZone.color, zone.color, zone.perc);
+      mWD.drawMainInfoCircle(radius, avgZone.color, zone.color, zone.perc, zone.color100perc);
 
       drawAdditonalData(dc);
 
@@ -100,7 +100,7 @@ class whatpowerView extends WatchUi.DataField {
       backColor = zone.color;
 
       mWD.drawBottomInfo(color, label, value, $._wiBottom.units(), backColor,
-                         zone.perc);
+                         zone.perc, zone.color100perc);
     }
   }
 
@@ -110,7 +110,7 @@ class whatpowerView extends WatchUi.DataField {
       var zone = $._wiLeft.zoneInfoValue();
       var avgZone = $._wiLeft.zoneInfoAverage();
       mWD.drawLeftInfo(zone.fontColor, value, zone.color, $._wiLeft.units(),
-                       avgZone.color, zone.perc);
+                       avgZone.color, zone.perc, zone.color100perc);
     }
 
     if ($._wiRight != null) {
@@ -118,7 +118,7 @@ class whatpowerView extends WatchUi.DataField {
       var zone = $._wiRight.zoneInfoValue();
       var avgZone = $._wiRight.zoneInfoAverage();
       mWD.drawRightInfo(zone.fontColor, value, zone.color, $._wiRight.units(),
-                        avgZone.color, zone.perc);
+                        avgZone.color, zone.perc, zone.color100perc);
     }
   }
 }

@@ -231,21 +231,21 @@ class WhatPressure extends WhatBase {
 
     if (pressure == null || pressure == 0) {
       return new ZoneInfo(0, label + trend, Graphics.COLOR_WHITE,
-                          Graphics.COLOR_BLACK, 0);
+                          Graphics.COLOR_BLACK, 0, null);
     }
 
     var color = getPressureColor(pressure);
 
     if (pressure < 1009.144) {
       return new ZoneInfo(1, "Low" + trend, color, Graphics.COLOR_BLACK,
-                          pressure);
+                          pressure, null);
     }
     if (pressure < 1022.689) {
       return new ZoneInfo(2, "Normal" + trend, color, Graphics.COLOR_BLACK,
-                          pressure);
+                          pressure, null);
     }
     return new ZoneInfo(3, "High" + trend, color, Graphics.COLOR_BLACK,
-                        pressure);
+                        pressure, null);
   }
 
   hidden function getPressureColor(pressure) {
