@@ -42,4 +42,10 @@
     <string id="ShowInfoTotalDescent">Show total descent</string>    
     <string id="ShowInfoTrainingEffect">Show training effect</string>    
     <string id="ShowInfoTemperature">Show temperature</string>    
+
+
+    <string id="ShowInfoLayout">Select layout</string>
+    <string id="ShowInfoLayoutPrompt">Select layout</string>
+    <string id="ShowInfoLayoutMiddleDefault">Default</string>
+    <string id="ShowInfoLayoutMiddleTriangle">Triangle thingy</string>
 </strings>

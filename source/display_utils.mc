@@ -117,7 +117,8 @@ class WhatDisplay {
     dc.drawPoint(x + maxwidth, y);
   }
 
-  function drawMainInfoCircle(radius, outlineColor, inlineColor, percentage, color100perc) {
+  function drawMainInfoCircle(radius, outlineColor, inlineColor, percentage,
+                              color100perc) {
     var x = dc.getWidth() / 2;
     var y = dc.getHeight() / 2;
 
@@ -187,40 +188,22 @@ class WhatDisplay {
 
   function drawBottomInfo(color, label, value, units, backColor, percentage,
                           color100perc) {
-    if (showMainCircle) {
-      drawBottomInfoBarThingy(color, label, value, units, backColor,
-                              percentage);
-    } else {
-      drawBottomInfoTriangleThingy(color, label, value, units, backColor,
-                                   percentage, color100perc);
-    }
+    // if (showMainCircle) {
+    drawBottomInfoBarThingy(color, label, value, units, backColor, percentage);
+    // } else {
+    //   drawBottomInfoTriangleThingy(color, label, value, units, backColor,
+    //                                percentage, color100perc);
+    // }
   }
 
-  // @@ add parameter calc 100% color and  backColor100perc to left/right/main
-  function drawBottomInfoTriangleThingy(color, label, value, units, backColor,
-                                        percentage, color100perc) {
-    // polygon
-    var wBottomBar =
-        dc.getWidth() - (3 * _widthAdditionalInfo) + marginLeft + marginRight;
-
-    var top = new Point(dc.getWidth() / 2, margin);
-    var left =
-        new Point(dc.getWidth() / 2 - wBottomBar / 2, dc.getHeight() - margin);
-    var right =
-        new Point(dc.getWidth() / 2 + wBottomBar / 2, dc.getHeight() - margin);
-    var pts = [ top.asArray(), right.asArray(), left.asArray(), top.asArray() ];
-
-    if (percentage < 100 || color100perc == null) {
-      dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
-    } else {
-      dc.setColor(color100perc, Graphics.COLOR_TRANSPARENT);
-      percentage = percentage - 100;
+  hidden function getPercentageTrianglePts(top as Point, left as Point,
+                                           right as Point, percentage) {
+    if (percentage >= 100) {
+      return [ top.asArray(), right.asArray(), left.asArray(), top.asArray() ];
     }
-    dc.fillPolygon(pts);
 
-    // perc triangle
-    var columnHeight = dc.getHeight() - 2 * margin;
-    var y = percentageToYpostion(percentage, margin, columnHeight);
+    var columnHeight = left.y - top.y;
+    var y = percentageToYpostion(percentage, top.y, columnHeight);
 
     var slopeLeft = slopeOfLine(left.x, left.y, top.x, top.y);
     var slopeRight = slopeOfLine(right.x, right.y, top.x, top.y);
@@ -236,12 +219,57 @@ class WhatDisplay {
       // System.println("slopeLeft:" + slopeLeft + " slopeRight:" + slopeRight +
       //                " y:" + y + " x1:" + x1 + " x2:" + x2);
 
-      pts = [[x1, y], [x2, y], right.asArray(), left.asArray(), [x1, y]];
-      dc.setColor(backColor, Graphics.COLOR_TRANSPARENT);
-      dc.fillPolygon(pts);
+      return [[x1, y], [x2, y], right.asArray(), left.asArray(), [x1, y]];
     }
-    // @@ > 100% bg == 100% color => calc perc - 100;
-    // @@
+    return [];
+  }
+
+  // @@ TODO setting layout: circle/triangle
+  // - main none -> bottom layout
+  // - else main layout
+  // @@ Draw triangle back first
+  // @@ add parameter calc 100% color and  backColor100perc to left/right/main
+  function drawBottomInfoTriangleThingy(color, label, value, units, backColor,
+                                        percentage, color100perc) {
+    // polygon
+    var wBottomBar =
+        dc.getWidth() - (4 * _widthAdditionalInfo) + marginLeft + marginRight;
+
+    var top = new Point(dc.getWidth() / 2, margin);
+    var left =
+        new Point(dc.getWidth() / 2 - wBottomBar / 2, dc.getHeight() - margin);
+    var right =
+        new Point(dc.getWidth() / 2 + wBottomBar / 2, dc.getHeight() - margin);
+    var topInner = top.move(0, 2);
+    var leftInner = left.move(2, -2);
+    var rightInner = right.move(-2, -2);
+    // @@ There is no drawPolygon
+    var pts = getPercentageTrianglePts(top, left, right, 100);
+    dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+    dc.fillPolygon(pts);
+    pts = getPercentageTrianglePts(topInner, leftInner, rightInner, 100);
+    dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+    dc.fillPolygon(pts);
+
+    if (percentage > 100 && color100perc != null) {
+      pts = getPercentageTrianglePts(topInner, leftInner, rightInner, 100);
+      dc.setColor(color100perc, Graphics.COLOR_TRANSPARENT);
+      dc.fillPolygon(pts);
+      percentage = percentage - 100;
+    }
+
+    pts = getPercentageTrianglePts(topInner, leftInner, rightInner, percentage);
+    dc.setColor(backColor, Graphics.COLOR_TRANSPARENT);
+    dc.fillPolygon(pts);
+
+    // value
+    var y = (left.y - top.y) / 2;
+    var maxwidth = (right.x - left.x);
+    var x = left.x + maxwidth / 2.0;
+    var fontValue = getFontAdditionalInfo(maxwidth, value);
+    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(x, y, fontValue, value,
+                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);  
   }
 
   function drawBottomInfoBarThingy(color, label, value, units, backColor,
@@ -316,7 +344,8 @@ class WhatDisplay {
     var barX = _widthAdditionalInfo + marginLeft;
 
     // circle back color
-    drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage, color100perc);
+    drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage,
+                        color100perc);
 
     var fontValue = getFontAdditionalInfo(_widthAdditionalInfo * 2, value);
     // units + value color
@@ -335,7 +364,8 @@ class WhatDisplay {
                          percentage, color100perc) {
     var barX = dc.getWidth() - _widthAdditionalInfo - marginRight;
     // circle
-    drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage, color100perc);
+    drawAdditonalInfoBG(barX, _widthAdditionalInfo, backColor, percentage,
+                        color100perc);
 
     // outline
     drawAdditonalInfoOutline(barX, _widthAdditionalInfo, outlineColor);
@@ -358,8 +388,8 @@ class WhatDisplay {
       return dc.getHeight() / 2;
     }
   }
-  hidden function drawAdditonalInfoBG(x, width, color, percentage, color100perc) {
-
+  hidden function drawAdditonalInfoBG(x, width, color, percentage,
+                                      color100perc) {
     var y = getCenterYcoordCircleAdditionalInfo(width);
 
     if (percentage < 100 || color100perc == null) {
@@ -426,4 +456,9 @@ enum {
   SmallField = 0,
   WideField = 1,
   OneField = 2
+}
+
+enum {
+  LayoutMiddleDefault = 0,
+  LayoutMiddleTriangle = 1,
 }

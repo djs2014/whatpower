@@ -141,4 +141,10 @@
 		<settingConfig type="numeric" min="0" max="4"/>
 	</setting>	
 	
+	<setting propertyKey="@Properties.showInfoLayout" title="@Strings.ShowInfoLayout" prompt="@Strings.ShowInfoLayoutPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.ShowInfoLayoutMiddleDefault</listEntry>
+            <listEntry value="1">@Strings.ShowInfoLayoutMiddleTriangle</listEntry>                        			
+        </settingConfig>
+    </setting> 
 </settings>

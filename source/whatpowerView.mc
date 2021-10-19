@@ -41,7 +41,7 @@ class whatpowerView extends WatchUi.DataField {
     }
     if ($._wiRight != null) {
       $._wiRight.updateInfo(info);
-    }   
+    }
   }
 
   // Display the value you computed here. This will be called
@@ -60,7 +60,7 @@ class whatpowerView extends WatchUi.DataField {
     $._wiRight = getShowInformation($._showInfoRight, $._showInfoHrFallback,
                                     $._showInfoTrainingEffectFallback, null);
 
-    var mainFontColor = null;    
+    var mainFontColor = null;
     mWD.setShowMainCircle($._wiMain != null);
     if ($._wiMain == null) {
       if (mWD.isNightMode()) {
@@ -69,6 +69,18 @@ class whatpowerView extends WatchUi.DataField {
       } else {
         mainFontColor = Graphics.COLOR_BLACK;
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+      }
+      if ($._wiBottom != null && $._showInfoLayout == LayoutMiddleTriangle && !mWD.isSmallField()) {
+        var value = $._wiBottom.formattedValue(mWD.field);
+        var zone = $._wiBottom.zoneInfoValue();
+        var label = zone.name;  // @@ should be short
+
+        var color = zone.fontColor;
+        var backColor = zone.color;
+
+        mWD.drawBottomInfoTriangleThingy(color, label, value,
+                                         $._wiBottom.units(), backColor,
+                                         zone.perc, zone.color100perc);
       }
       drawAdditonalData(dc);
     } else {
@@ -81,25 +93,31 @@ class whatpowerView extends WatchUi.DataField {
       if (mWD.isWideField()) {
         radius = radius + dc.getHeight() / 5;
       }
-      mWD.drawMainInfoCircle(radius, avgZone.color, zone.color, zone.perc, zone.color100perc);
+      mWD.drawMainInfoCircle(radius, avgZone.color, zone.color, zone.perc,
+                             zone.color100perc);
 
       drawAdditonalData(dc);
 
-      var value = $._wiMain.formattedValue(mWD.field);  // @@ rename to fieldType
+      var value =
+          $._wiMain.formattedValue(mWD.field);  // @@ rename to fieldType
       mWD.drawMainInfo(zone.fontColor, zone.name, value, $._wiMain.units());
     }
-    
+
     if ($._wiBottom != null) {
       var value = $._wiBottom.formattedValue(mWD.field);
-      var color = mainFontColor;
-      var backColor = null;
+      // var color = mainFontColor;
+      // var backColor = null;
       var zone = $._wiBottom.zoneInfoValue();
       var label = zone.name;  // @@ should be short
 
-      color = zone.fontColor;
-      backColor = zone.color;
-
-      mWD.drawBottomInfo(color, label, value, $._wiBottom.units(), backColor,
+      var color = zone.fontColor;
+      var backColor = zone.color;
+      var units = $._wiBottom.units();
+      if ($._wiMain == null && $._showInfoLayout == LayoutMiddleTriangle) {
+        value = "";
+        units = "";
+      }
+      mWD.drawBottomInfo(color, label, value, units, backColor,
                          zone.perc, zone.color100perc);
     }
   }

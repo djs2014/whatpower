@@ -1,5 +1,11 @@
 x only calc when shown
 
+rotations 
+https://forums.garmin.com/developer/connect-iq/f/discussion/250/feature-request-add-option-to-draw-a-polygon-at-a-certain-position
+
+triangle field
+- in background
+- color white when 
 4 left/right - font after digit smaller => so font stays larger see speed.
 2 center main circle @@ pressure too long ??
 3 2 fields -> triangle bottom
