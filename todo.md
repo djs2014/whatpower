@@ -1,4 +1,17 @@
-x only calc when shown
+layout
+Settings
+    - Hide middle on small fields
+Define layout values:
+    - Circles: All circles (default)
+    - Triangle main: @@ add label + avg value border
+        When show bottom -> triangle is smaller y-only 
+    - Triangle bottom: no label
+
+options:
+    - main null -> 
+    - main & bottom null -> left/right bigger and closer to each
+    - only left or right or main or bottom -> draw center
+
 
 rotations 
 https://forums.garmin.com/developer/connect-iq/f/discussion/250/feature-request-add-option-to-draw-a-polygon-at-a-certain-position
@@ -10,6 +23,7 @@ triangle field
 2 center main circle @@ pressure too long ??
 3 2 fields -> triangle bottom
 add check symbol when target reached
+x only calc when shown
 
 when no movement -> use heading compass not gps data (should move 1 meter?)
 barrel

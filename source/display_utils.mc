@@ -9,7 +9,10 @@ class WhatDisplay {
   hidden var marginRight = 1;
   hidden var backgroundColor = Graphics.COLOR_WHITE;
   hidden var nightMode = false;
-  hidden var showMainCircle = true;
+  hidden var showMainInfo = true;
+  hidden var showLeftInfo = true;
+  hidden var showRightInfo = true;
+  hidden var showBottomInfo = true;
 
   hidden var mFontLabel = Graphics.FONT_TINY;
   hidden var mFontValue = Graphics.FONT_LARGE;
@@ -29,17 +32,22 @@ class WhatDisplay {
 
   var width = 0;
   var height = 0;
-  var field = SmallField;
+  var fieldType= SmallField;
 
   function initialize() {}
 
-  function isSmallField() { return field == SmallField; }
-  function isWideField() { return field == WideField; }
-  function isOneField() { return field == OneField; }
+  function isSmallField() { return fieldType== SmallField; }
+  function isWideField() { return fieldType== WideField; }
+  function isOneField() { return fieldType== OneField; }
   function isNightMode() { return nightMode; }
   function setNightMode(nightMode) { self.nightMode = nightMode; }
-  function setShowMainCircle(showMainCircle) {
-    self.showMainCircle = showMainCircle;
+  function setShowMainInfo(showMainInfo) { self.showMainInfo = showMainInfo; }
+  function setShowLeftInfo(showLeftInfo) { self.showLeftInfo = showLeftInfo; }
+  function setShowRightInfo(showRightInfo) {
+    self.showRightInfo = showRightInfo;
+  }
+  function setShowBottomInfo(showBottomInfo) {
+    self.showBottomInfo = showBottomInfo;
   }
 
   function onLayout(dc as Dc) {
@@ -47,23 +55,23 @@ class WhatDisplay {
 
     self.width = dc.getWidth();
     self.height = dc.getHeight();
-    self.field = SmallField;
+    self.fieldType= SmallField;
 
     if (self.width >= 246) {
-      self.field = WideField;
+      self.fieldType= WideField;
       if (self.height >= 322) {
-        self.field = OneField;
+        self.fieldType= OneField;
       }
     }
 
     // if (self.height < 80) {
-    //   self.field = SmallField;
+    //   self.fieldType= SmallField;
     // }
 
     // 1 large field: w[246] h[322]
     // 2 fields: w[246] h[160]
     // 3 fields: w[246] h[106]
-    if (showMainCircle) {
+    if (showMainInfo) {
       _widthAdditionalInfo = 32.0f;
       mFontValueAdditionalIndex = 2;
       if (isSmallField()) {
@@ -110,11 +118,40 @@ class WhatDisplay {
                degreeEnd);
     dc.setPenWidth(1.0);
   }
-  function drawPercentageLine(x, y, maxwidth, percentage) {
+  function drawPercentageLine(x, y, maxwidth, percentage, height) {
     var wPercentage = maxwidth / 100.0 * percentage;
     dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
-    dc.drawLine(x, y, x + wPercentage, y);
+    // dc.drawLine(x, y, x + wPercentage, y);
+    dc.fillRectangle(x, y, wPercentage, height);
     dc.drawPoint(x + maxwidth, y);
+  }
+
+  hidden function getPercentageTrianglePts(top as Point, left as Point,
+                                           right as Point, percentage) {
+    if (percentage >= 100) {
+      return [ top.asArray(), right.asArray(), left.asArray(), top.asArray() ];
+    }
+
+    var columnHeight = left.y - top.y;
+    var y = percentageToYpostion(percentage, top.y, columnHeight);
+
+    var slopeLeft = slopeOfLine(left.x, left.y, top.x, top.y);
+    var slopeRight = slopeOfLine(right.x, right.y, top.x, top.y);
+
+    // System.println("top" + top + "left" + left + " right" + right +
+    //                " slopeLeft:" + slopeLeft + " slopeRight:" + slopeRight);
+    if (slopeLeft != 0.0 and slopeRight != 0.0) {
+      var x1 = (y - left.y) / slopeLeft;
+      x1 = x1 + left.x;
+      var x2 = (y - right.y) / slopeRight;
+      x2 = x2 + right.x;
+
+      // System.println("slopeLeft:" + slopeLeft + " slopeRight:" + slopeRight +
+      //                " y:" + y + " x1:" + x1 + " x2:" + x2);
+
+      return [[x1, y], [x2, y], right.asArray(), left.asArray(), [x1, y]];
+    }
+    return [];
   }
 
   function drawMainInfoCircle(radius, outlineColor, inlineColor, percentage,
@@ -186,55 +223,19 @@ class WhatDisplay {
     }
   }
 
-  function drawBottomInfo(color, label, value, units, backColor, percentage,
-                          color100perc) {
-    // if (showMainCircle) {
-    drawBottomInfoBarThingy(color, label, value, units, backColor, percentage);
-    // } else {
-    //   drawBottomInfoTriangleThingy(color, label, value, units, backColor,
-    //                                percentage, color100perc);
-    // }
-  }
-
-  hidden function getPercentageTrianglePts(top as Point, left as Point,
-                                           right as Point, percentage) {
-    if (percentage >= 100) {
-      return [ top.asArray(), right.asArray(), left.asArray(), top.asArray() ];
-    }
-
-    var columnHeight = left.y - top.y;
-    var y = percentageToYpostion(percentage, top.y, columnHeight);
-
-    var slopeLeft = slopeOfLine(left.x, left.y, top.x, top.y);
-    var slopeRight = slopeOfLine(right.x, right.y, top.x, top.y);
-
-    // System.println("top" + top + "left" + left + " right" + right +
-    //                " slopeLeft:" + slopeLeft + " slopeRight:" + slopeRight);
-    if (slopeLeft != 0.0 and slopeRight != 0.0) {
-      var x1 = (y - left.y) / slopeLeft;
-      x1 = x1 + left.x;
-      var x2 = (y - right.y) / slopeRight;
-      x2 = x2 + right.x;
-
-      // System.println("slopeLeft:" + slopeLeft + " slopeRight:" + slopeRight +
-      //                " y:" + y + " x1:" + x1 + " x2:" + x2);
-
-      return [[x1, y], [x2, y], right.asArray(), left.asArray(), [x1, y]];
-    }
-    return [];
-  }
-
   // @@ TODO setting layout: circle/triangle
   // - main none -> bottom layout
   // - else main layout
   // @@ Draw triangle back first
   // @@ add parameter calc 100% color and  backColor100perc to left/right/main
-  function drawBottomInfoTriangleThingy(color, label, value, units, backColor,
+  function drawInfoTriangleThingy(color, label, value, units, backColor,
                                         percentage, color100perc) {
     // polygon
-    var wBottomBar =
-        dc.getWidth() - (4 * _widthAdditionalInfo) + marginLeft + marginRight;
-
+    var wBottomBar = 2 * _widthAdditionalInfo; // @@ TEST -> 1/3 width always better? if no main.
+    //     dc.getWidth() - (4 * _widthAdditionalInfo) + marginLeft + marginRight;
+    // if (isSmallField()) {
+    //   wBottomBar = dc.getWidth() / 2;
+    // }
     var top = new Point(dc.getWidth() / 2, margin);
     var left =
         new Point(dc.getWidth() / 2 - wBottomBar / 2, dc.getHeight() - margin);
@@ -243,14 +244,17 @@ class WhatDisplay {
     var topInner = top.move(0, 2);
     var leftInner = left.move(2, -2);
     var rightInner = right.move(-2, -2);
-    // @@ There is no drawPolygon
+
     var pts = getPercentageTrianglePts(top, left, right, 100);
     dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
     dc.fillPolygon(pts);
-    pts = getPercentageTrianglePts(topInner, leftInner, rightInner, 100);
-    dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-    dc.fillPolygon(pts);
-
+    if (!isSmallField()) {
+      // @@ Draw outline, there is no drawPolygon, so fill inner with
+      // white/background
+      pts = getPercentageTrianglePts(topInner, leftInner, rightInner, 100);
+      dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+      dc.fillPolygon(pts);
+    }
     if (percentage > 100 && color100perc != null) {
       pts = getPercentageTrianglePts(topInner, leftInner, rightInner, 100);
       dc.setColor(color100perc, Graphics.COLOR_TRANSPARENT);
@@ -262,18 +266,26 @@ class WhatDisplay {
     dc.setColor(backColor, Graphics.COLOR_TRANSPARENT);
     dc.fillPolygon(pts);
 
-    // value
-    var y = (left.y - top.y) / 2;
-    var maxwidth = (right.x - left.x);
-    var x = left.x + maxwidth / 2.0;
-    var fontValue = getFontAdditionalInfo(maxwidth, value);
-    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(x, y, fontValue, value,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);  
+    if (!isSmallField()) {
+      // value
+      var y = (left.y - top.y) / 2;
+      var maxwidth = (right.x - left.x);
+      var x = left.x + maxwidth / 2.0;
+      var fontValue = getFontAdditionalInfo(maxwidth, value);
+      dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(x, y, fontValue, value,
+                  Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+      // units
+      var ha = dc.getFontHeight(fontValue);
+      y = y + ha / 2;
+      dc.drawText(x, y, mFontUnits, units,
+                  Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    } // @@ show units in small field..
   }
 
-  function drawBottomInfoBarThingy(color, label, value, units, backColor,
-                                   percentage) {
+  function drawBottomInfo(color, label, value, units, backColor, percentage,
+                          color100perc) {
     var hv = dc.getFontHeight(mFontBottomValue);
 
     var wBottomBar =
@@ -286,7 +298,7 @@ class WhatDisplay {
     var marginleft1 = 2;
     var marginleft2 = 2;
     if (isSmallField()) {
-      if (!showMainCircle) {
+      if (!showMainInfo) {
         wBottomBar = dc.getWidth() - (2 * _widthAdditionalInfo);
       }
       // no label
@@ -316,7 +328,7 @@ class WhatDisplay {
     } else {
       dc.fillRoundedRectangle(xb, yb, wBottomBar, hv, 3);
     }
-    drawPercentageLine(xb, yPercentage, wBottomBar, percentage);
+    drawPercentageLine(xb, yPercentage, wBottomBar, percentage, 2);    
 
     if (isSmallField()) {
       return;
@@ -382,7 +394,7 @@ class WhatDisplay {
   }
 
   hidden function getCenterYcoordCircleAdditionalInfo(width) {
-    if (showMainCircle) {
+    if (showMainInfo) {
       return dc.getHeight() - 2 * margin - width;
     } else {
       return dc.getHeight() / 2;
