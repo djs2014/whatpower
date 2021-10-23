@@ -16,7 +16,7 @@
 
     <string id="ShowSeaLevelPressure">Show pressure at sealevel</string>   
             
-    <string id="ShowInfoMain">Show main</string>        
+    <string id="ShowInfoTop">Show top</string>        
     <string id="ShowInfoLeft">Show left</string>        
     <string id="ShowInfoRight">Show right</string>        
     <string id="ShowInfoBottom">Show bottom</string>    

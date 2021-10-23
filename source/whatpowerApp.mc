@@ -2,7 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-var _wiMain as WhatInformation;
+var _wiTop as WhatInformation;
 var _wiLeft as WhatInformation;
 var _wiRight as WhatInformation;
 var _wiBottom as WhatInformation;
@@ -21,7 +21,7 @@ var _wTime as WhatTime;
 var _wHeading as WhatHeading;
 var _wEngergyExpenditure as WhatEngergyExpenditure;
 
-var _showInfoMain = ShowInfoPower;
+var _showInfoTop = ShowInfoPower;
 var _showInfoLeft = ShowInfoNothing;
 var _showInfoRight = ShowInfoNothing;
 var _showInfoBottom = ShowInfoNothing;
@@ -67,7 +67,7 @@ class whatpowerApp extends Application.AppBase {
 
     function loadUserSettings() {
       try {
-        $._showInfoMain = getNumberProperty("showInfoMain", ShowInfoPower);
+        $._showInfoTop = getNumberProperty("showInfoTop", ShowInfoPower);
         $._showInfoLeft = getNumberProperty("showInfoLeft", ShowInfoHeartrate);
         $._showInfoRight = getNumberProperty("showInfoRight", ShowInfoCadence);
         $._showInfoBottom = getNumberProperty("showInfoBottom", ShowInfoSpeed);

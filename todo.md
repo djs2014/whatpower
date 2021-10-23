@@ -13,9 +13,9 @@ Define layout values:
         - middle triangle + bottom bar
 
 options:
-    - main null -> 
-    - main & bottom null -> left/right bigger and closer to each
-    - only left or right or main or bottom -> draw center
+    - Top null -> 
+    - Top & bottom null -> left/right bigger and closer to each
+    - only left or right or Top or bottom -> draw center
 
 
 rotations 
@@ -25,7 +25,7 @@ triangle field
 - in background
 - color white when 
 4 left/right - font after digit smaller => so font stays larger see speed.
-2 center main circle @@ pressure too long ??
+2 center Top circle @@ pressure too long ??
 3 2 fields -> triangle bottom
 add check symbol when target reached
 x only calc when shown
@@ -43,12 +43,12 @@ altitude show arrows up/down instead of ++--
 heading using lat lon
 heading using lat/lng a and b 
 bigger fonts left right
-hide main ==> left/right then bigger
+hide Top ==> left/right then bigger
 option hide left/right values on small field
 
 teffect fall back hr+te == 0
 distance label
-label main / bottom
+label Top / bottom
 
 x Display % of target in graphic way @@?? circle part? in front of label
 = part of zone info check all classes -> color black/font  
@@ -59,7 +59,7 @@ targetTrainingEffect test
 
 x no bottom info in small field
 
-large main -> perc/other info under value
+large Top -> perc/other info under value
 option: show target/perc (auto calc for ftp / hr)
     or show target bar? 0 - 100%
 
@@ -121,7 +121,7 @@ trainingEffect  https://www.firstbeat.com/en/blog/how-to-use-training-effect/
 - barrel + name
     - whatutilsbarrel
 
-diff apps using same barrel, focus on diff main field
+diff apps using same barrel, focus on diff Top field
 - currentpower x sec
 - heartrate
 - speed
@@ -153,7 +153,7 @@ optional left/right/under (upper left, upper right if large/wide field)
 
 config: 
     left==<list>
-    main is fixed
+    Top is fixed
     right==<list>
 
 
@@ -185,9 +185,9 @@ if color only -> symbol in circle power / hr/ cadence etc
 - zoneinfo -> colors power / heartrate
 - colors
 - display
-    draw main info
+    draw Top info
     draw addcircle info (position left, right, etc) + avg?
-    draw sub info (below main)
+    draw sub info (below Top)
 
 
 https://www.mathopenref.com/coordintersection.html

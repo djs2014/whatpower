@@ -1,5 +1,5 @@
 <settings>
- 	<setting propertyKey="@Properties.showInfoMain" title="@Strings.ShowInfoMain" prompt="@Strings.ShowInfoPrompt">
+ 	<setting propertyKey="@Properties.showInfoTop" title="@Strings.ShowInfoTop" prompt="@Strings.ShowInfoPrompt">
         <settingConfig type="list">
             <listEntry value="0">@Strings.ShowInfoNothing</listEntry>
             <listEntry value="1">@Strings.ShowInfoPower</listEntry>            

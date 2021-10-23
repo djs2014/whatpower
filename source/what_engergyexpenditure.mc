@@ -29,7 +29,7 @@ class WhatEngergyExpenditure extends WhatBase {
     return self.energyExpenditure;
   }
 
-  // @@ long for main view -> getUnitsMain
+  // @@ long for Top view -> getUnitsTop
   function getUnitsLong() as String { return "kcal/min"; }
   // @@ short for left/right or bottom
   function getUnits() as String { return "kcal/m"; }
