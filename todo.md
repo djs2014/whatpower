@@ -1,11 +1,16 @@
+@@ only left, middle, right fields -> simpler
+@@ fallback for HR, Te fields
+@@ extra field for ?? and how to display -> when single field
+
 layout
 Settings
     - Hide middle on small fields
 Define layout values:
     - Circles: All circles (default)
-    - Triangle main: @@ add label + avg value border
+    - Triangle middle: @@ add label + avg value border
         When show bottom -> triangle is smaller y-only 
-    - Triangle bottom: no label
+        - no middle -> bottom triangle
+        - middle triangle + bottom bar
 
 options:
     - main null -> 

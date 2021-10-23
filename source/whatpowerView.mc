@@ -48,10 +48,16 @@ class whatpowerView extends WatchUi.DataField {
   // once a second when the data field is visible.
   function onUpdate(dc as Dc) as Void {
     mWD.onUpdate(dc);
+    mWD.clearDisplay(getBackgroundColor(), getBackgroundColor());
+
     mWD.setNightMode((getBackgroundColor() == Graphics.COLOR_BLACK));
 
-    $._wiMain = getShowInformation($._showInfoMain, $._showInfoHrFallback,
-                                   $._showInfoTrainingEffectFallback, null);
+    if (mWD.isSmallField()) {
+      $._wiMain = null;
+    } else {
+      $._wiMain = getShowInformation($._showInfoMain, $._showInfoHrFallback,
+                                     $._showInfoTrainingEffectFallback, null);
+    }
     $._wiBottom = getShowInformation($._showInfoBottom, $._showInfoHrFallback,
                                      $._showInfoTrainingEffectFallback, null);
     $._wiLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback,
@@ -79,7 +85,6 @@ class whatpowerView extends WatchUi.DataField {
 
     var mainFontColor = null;
     if (!showMain) {
-      mWD.clearDisplay(getBackgroundColor(), getBackgroundColor());
       if (mWD.isNightMode()) {
         mainFontColor = Graphics.COLOR_WHITE;
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
@@ -88,16 +93,21 @@ class whatpowerView extends WatchUi.DataField {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
       }
 
-      if (showBottom && isTriangleLayout) {
-        // draw in background
-        drawBottomDataTriangle(dc);
+      var drawMiddleInfoInBackground = mWD.leftAndRightCircleFillWholeScreen();
+      if (showBottom && drawMiddleInfoInBackground) {
+        if (isTriangleLayout) {
+          drawBottomDataTriangle(dc);
+        } else {
+          drawBottomDataDefault(dc);
+        }
       }
-
       drawAdditonalData(dc);
-
-      if (showBottom && !isTriangleLayout) {
-        // draw in foreground
-        drawBottomDataDefault(dc);
+      if (showBottom && !drawMiddleInfoInBackground) {
+        if (isTriangleLayout) {
+          drawBottomDataTriangle(dc);
+        } else {
+          drawBottomDataDefault(dc);
+        }
       }
     } else {
       var zone = $._wiMain.zoneInfoValue();
@@ -108,18 +118,18 @@ class whatpowerView extends WatchUi.DataField {
       if (mWD.isWideField()) {
         radius = radius + dc.getHeight() / 5;
       }
+
+      // TEST
       mWD.drawMainInfoCircle(radius, avgZone.color, zone.color, zone.perc,
                              zone.color100perc);
+
+      drawAdditonalData(dc);
 
       if (showBottom) {
         drawBottomDataDefault(dc);
       }
-      drawAdditonalData(dc);
-
-      var value =
-          $._wiMain.formattedValue(mWD.fieldType); 
+      var value = $._wiMain.formattedValue(mWD.fieldType);
       mWD.drawMainInfo(zone.fontColor, zone.name, value, $._wiMain.units());
-
     }
   }
 
@@ -134,7 +144,7 @@ class whatpowerView extends WatchUi.DataField {
     mWD.drawBottomInfo(color, label, value, units, backColor, zone.perc,
                        zone.color100perc);
   }
-  
+
   function drawBottomDataTriangle(dc) {
     var value = $._wiBottom.formattedValue(mWD.fieldType);
     var zone = $._wiBottom.zoneInfoValue();
@@ -144,7 +154,7 @@ class whatpowerView extends WatchUi.DataField {
     var backColor = zone.color;
 
     mWD.drawInfoTriangleThingy(color, label, value, $._wiBottom.units(),
-                                     backColor, zone.perc, zone.color100perc);
+                               backColor, zone.perc, zone.color100perc);
   }
 
   function drawAdditonalData(dc) {

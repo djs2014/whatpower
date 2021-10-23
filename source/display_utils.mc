@@ -32,13 +32,13 @@ class WhatDisplay {
 
   var width = 0;
   var height = 0;
-  var fieldType= SmallField;
+  var fieldType = SmallField;
 
   function initialize() {}
 
-  function isSmallField() { return fieldType== SmallField; }
-  function isWideField() { return fieldType== WideField; }
-  function isOneField() { return fieldType== OneField; }
+  function isSmallField() { return fieldType == SmallField; }
+  function isWideField() { return fieldType == WideField; }
+  function isOneField() { return fieldType == OneField; }
   function isNightMode() { return nightMode; }
   function setNightMode(nightMode) { self.nightMode = nightMode; }
   function setShowMainInfo(showMainInfo) { self.showMainInfo = showMainInfo; }
@@ -55,12 +55,12 @@ class WhatDisplay {
 
     self.width = dc.getWidth();
     self.height = dc.getHeight();
-    self.fieldType= SmallField;
+    self.fieldType = SmallField;
 
     if (self.width >= 246) {
-      self.fieldType= WideField;
+      self.fieldType = WideField;
       if (self.height >= 322) {
-        self.fieldType= OneField;
+        self.fieldType = OneField;
       }
     }
 
@@ -71,21 +71,21 @@ class WhatDisplay {
     // 1 large field: w[246] h[322]
     // 2 fields: w[246] h[160]
     // 3 fields: w[246] h[106]
-    if (showMainInfo) {
-      _widthAdditionalInfo = 32.0f;
-      mFontValueAdditionalIndex = 2;
-      if (isSmallField()) {
-        _widthAdditionalInfo = _widthAdditionalInfo - 10.0f;
-        mFontValueAdditionalIndex = 1;
-      }
-    } else {
-      _widthAdditionalInfo = min(dc.getWidth() / 4, dc.getHeight() / 2 + 10);
-      mFontValueAdditionalIndex = 3;
-      if (isSmallField()) {
-        _widthAdditionalInfo = 29.0f;
-        mFontValueAdditionalIndex = 1;
-      }
+    // if (showMainInfo) {
+    //   _widthAdditionalInfo = 32.0f;
+    //   mFontValueAdditionalIndex = 2;
+    //   if (isSmallField()) {
+    //     _widthAdditionalInfo = _widthAdditionalInfo - 10.0f;
+    //     mFontValueAdditionalIndex = 1;
+    //   }
+    // } else {
+    _widthAdditionalInfo = min(dc.getWidth() / 4, dc.getHeight() / 2 + 10);
+    mFontValueAdditionalIndex = 3;
+    if (isSmallField()) {
+      _widthAdditionalInfo = 29.0f;
+      mFontValueAdditionalIndex = 1;
     }
+    // }
   }
   function onUpdate(dc as Dc) {
     if (dc has : setAntiAlias) {
@@ -229,10 +229,12 @@ class WhatDisplay {
   // @@ Draw triangle back first
   // @@ add parameter calc 100% color and  backColor100perc to left/right/main
   function drawInfoTriangleThingy(color, label, value, units, backColor,
-                                        percentage, color100perc) {
+                                  percentage, color100perc) {
     // polygon
-    var wBottomBar = 2 * _widthAdditionalInfo; // @@ TEST -> 1/3 width always better? if no main.
-    //     dc.getWidth() - (4 * _widthAdditionalInfo) + marginLeft + marginRight;
+    var wBottomBar = 2 * _widthAdditionalInfo;  // @@ TEST -> 1/3 width always
+                                                // better? if no main.
+    //     dc.getWidth() - (4 * _widthAdditionalInfo) + marginLeft +
+    //     marginRight;
     // if (isSmallField()) {
     //   wBottomBar = dc.getWidth() / 2;
     // }
@@ -246,7 +248,7 @@ class WhatDisplay {
     var rightInner = right.move(-2, -2);
 
     var pts = getPercentageTrianglePts(top, left, right, 100);
-    dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
     dc.fillPolygon(pts);
     if (!isSmallField()) {
       // @@ Draw outline, there is no drawPolygon, so fill inner with
@@ -266,24 +268,36 @@ class WhatDisplay {
     dc.setColor(backColor, Graphics.COLOR_TRANSPARENT);
     dc.fillPolygon(pts);
 
-    if (!isSmallField()) {
-      // value
-      var y = (left.y - top.y) / 2;
+    if (!leftAndRightCircleFillWholeScreen()) {
       var maxwidth = (right.x - left.x);
       var x = left.x + maxwidth / 2.0;
       var fontValue = getFontAdditionalInfo(maxwidth, value);
+      var y = (left.y - top.y) / 2;
+      var ha = dc.getFontHeight(fontValue);
+
+      // label
+      var yLabel = y - dc.getFontHeight(mFontBottomLabel) - 3;
+      // y - dc.getFontHeight(mFontBottomLabel) - ha / 2 + margin;
+      dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(x, yLabel, mFontBottomLabel, label,
+                  Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
       dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+      // value
       dc.drawText(x, y, fontValue, value,
                   Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
       // units
-      var ha = dc.getFontHeight(fontValue);
-      y = y + ha / 2;
-      dc.drawText(x, y, mFontUnits, units,
+      var yUnits = y + ha / 2;
+      dc.drawText(x, yUnits, mFontUnits, units,
                   Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-    } // @@ show units in small field..
+    }
   }
 
+  function leftAndRightCircleFillWholeScreen() {
+    return dc.getWidth() - 40 <
+           (4 * _widthAdditionalInfo) + (marginLeft + marginRight);
+  }
   function drawBottomInfo(color, label, value, units, backColor, percentage,
                           color100perc) {
     var hv = dc.getFontHeight(mFontBottomValue);
@@ -328,7 +342,7 @@ class WhatDisplay {
     } else {
       dc.fillRoundedRectangle(xb, yb, wBottomBar, hv, 3);
     }
-    drawPercentageLine(xb, yPercentage, wBottomBar, percentage, 2);    
+    drawPercentageLine(xb, yPercentage, wBottomBar, percentage, 2);
 
     if (isSmallField()) {
       return;
@@ -394,11 +408,12 @@ class WhatDisplay {
   }
 
   hidden function getCenterYcoordCircleAdditionalInfo(width) {
-    if (showMainInfo) {
-      return dc.getHeight() - 2 * margin - width;
-    } else {
-      return dc.getHeight() / 2;
-    }
+    return dc.getHeight() / 2;
+    // if (showMainInfo) {
+    //   return dc.getHeight() - 2 * margin - width;
+    // } else {
+    //   return dc.getHeight() / 2;
+    // }
   }
   hidden function drawAdditonalInfoBG(x, width, color, percentage,
                                       color100perc) {
@@ -471,6 +486,6 @@ enum {
 }
 
 enum {
-  LayoutMiddleDefault = 0,
+  LayoutMiddleCircle = 0,
   LayoutMiddleTriangle = 1,
 }

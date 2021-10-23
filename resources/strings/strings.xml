@@ -44,8 +44,8 @@
     <string id="ShowInfoTemperature">Show temperature</string>    
 
 
-    <string id="ShowInfoLayout">Select layout</string>
+    <string id="ShowInfoLayout">Layout middle part</string>
     <string id="ShowInfoLayoutPrompt">Select layout</string>
-    <string id="ShowInfoLayoutMiddleDefault">Default</string>
-    <string id="ShowInfoLayoutMiddleTriangle">Triangle thingy</string>
+    <string id="ShowInfoLayoutMiddleCircle">Circle</string>
+    <string id="ShowInfoLayoutMiddleTriangle">Triangle</string>
 </strings>

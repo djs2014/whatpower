@@ -27,7 +27,7 @@ var _showInfoRight = ShowInfoNothing;
 var _showInfoBottom = ShowInfoNothing;
 var _showInfoHrFallback = ShowInfoNothing;
 var _showInfoTrainingEffectFallback = ShowInfoNothing;
-var _showInfoLayout = LayoutMiddleDefault;
+var _showInfoLayout = LayoutMiddleCircle;
 var _showSealevelPressure = true;
 
 class whatpowerApp extends Application.AppBase {
@@ -77,7 +77,7 @@ class whatpowerApp extends Application.AppBase {
             "showInfoTrainingEffectFallback", ShowInfoEnergyExpenditure);
 
         $._showInfoLayout =
-            getNumberProperty("showInfoLayout", LayoutMiddleDefault);
+            getNumberProperty("showInfoLayout", LayoutMiddleCircle);
 
         _wPower.setFtp(getNumberProperty("ftpValue", 200));
         _wPower.setPerSec(getNumberProperty("powerPerSecond", 3));
