@@ -3,13 +3,14 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.System;
+import WhatAppBase;
 
 class whatpowerView extends WatchUi.DataField {
   hidden var mWD;
 
   function initialize() {
     DataField.initialize();
-    mWD = new WhatDisplay();
+    mWD = new WhatAppBase.WhatDisplay();
   }
 
   // Set your layout here. Anytime the size of obscurity of
@@ -59,12 +60,8 @@ class whatpowerView extends WatchUi.DataField {
       dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
     }
 
-    // if (mWD.isSmallField()) {
-    //   $._wiTop = null;
-    // } else {
     $._wiTop = getShowInformation($._showInfoTop, $._showInfoHrFallback,
                                   $._showInfoTrainingEffectFallback, null);
-    // }
     $._wiBottom = getShowInformation($._showInfoBottom, $._showInfoHrFallback,
                                      $._showInfoTrainingEffectFallback, null);
     $._wiLeft = getShowInformation($._showInfoLeft, $._showInfoHrFallback,
@@ -77,8 +74,6 @@ class whatpowerView extends WatchUi.DataField {
     var showRight = $._wiRight != null;
     var showBottom = $._wiBottom != null;
 
-    // var isTriangleLayout = $._showInfoLayout == LayoutMiddleTriangle;
-
     mWD.setShowTopInfo(showTop);
     mWD.setShowLeftInfo(showLeft);
     mWD.setShowRightInfo(showRight);
@@ -88,48 +83,7 @@ class whatpowerView extends WatchUi.DataField {
     drawTopInfo(dc);
     drawLeftInfo(dc);
     drawRightInfo(dc);
-    drawBottomInfo(dc);
-
-    // if (!showTop) {
-    //   var drawMiddleInfoInBackground =
-    //   mWD.leftAndRightCircleFillWholeScreen(); if (showBottom &&
-    //   drawMiddleInfoInBackground) {
-    //     if (isTriangleLayout) {
-    //       drawBottomDataTriangle(dc);
-    //     } else {
-    //       drawBottomDataDefault(dc);
-    //     }
-    //   }
-    //   drawAdditonalData(dc);
-    //   if (showBottom && !drawMiddleInfoInBackground) {
-    //     if (isTriangleLayout) {
-    //       drawBottomDataTriangle(dc);
-    //     } else {
-    //       drawBottomDataDefault(dc);
-    //     }
-    //   }
-    // } else {
-    //   var zone = $._wiTop.zoneInfoValue();
-    //   mWD.clearDisplay(zone.fontColor, zone.color);
-
-    //   var avgZone = $._wiTop.zoneInfoAverage();
-    //   var radius = dc.getHeight() / 2;
-    //   if (mWD.isWideField()) {
-    //     radius = radius + dc.getHeight() / 5;
-    //   }
-
-    //   // TEST
-    //   mWD.drawTopInfoCircle(radius, avgZone.color, zone.color, zone.perc,
-    //                         zone.color100perc);
-
-    //   drawAdditonalData(dc);
-
-    //   if (showBottom) {
-    //     drawBottomDataDefault(dc);
-    //   }
-    //   var value = $._wiTop.formattedValue(mWD.fieldType);
-    //   mWD.drawTopInfo(zone.fontColor, zone.name, value, $._wiTop.units());
-    // }
+    drawBottomInfo(dc);    
   }
 
   function drawLeftInfo(dc) {
@@ -149,8 +103,9 @@ class whatpowerView extends WatchUi.DataField {
     var value = $._wiTop.formattedValue(SmallField);
     var zone = $._wiTop.zoneInfoValue();
     var avgZone = $._wiTop.zoneInfoAverage();
-    mWD.drawTopInfo(zone.name, zone.fontColor, value, zone.color, $._wiTop.units(),
-                    avgZone.color, zone.perc, zone.color100perc);
+    mWD.drawTopInfo(zone.name, zone.fontColor, value, zone.color,
+                    $._wiTop.units(), avgZone.color, zone.perc,
+                    zone.color100perc);
   }
 
   function drawRightInfo(dc) {
@@ -173,19 +128,7 @@ class whatpowerView extends WatchUi.DataField {
     var label = zone.name;  // @@ should be short
     mWD.drawBottomInfo(zone.fontColor, label, value, $._wiBottom.units(),
                        zone.color, zone.perc, zone.color100perc);
-  }
-
-  // function drawBottomDataDefault(dc) {
-  //   var value = $._wiBottom.formattedValue(mWD.fieldType);
-  //   var zone = $._wiBottom.zoneInfoValue();
-  //   var label = zone.name;  // @@ should be short
-
-  //   var color = zone.fontColor;
-  //   var backColor = zone.color;
-  //   var units = $._wiBottom.units();
-  //   mWD.drawBottomInfo(color, label, value, units, backColor, zone.perc,
-  //                      zone.color100perc);
-  // }
+  } 
 
   function drawBottomDataTriangle(dc) {
     var value = $._wiBottom.formattedValue(mWD.fieldType);
@@ -198,24 +141,77 @@ class whatpowerView extends WatchUi.DataField {
     mWD.drawInfoTriangleThingy(color, label, value, $._wiBottom.units(),
                                backColor, zone.perc, zone.color100perc);
   }
-
-  function drawAdditonalData(dc) {
-    // @@ set circle positions + circle width -> inside mWD based on what info
-    // is displayed
-    if ($._wiLeft != null) {
-      var value = $._wiLeft.formattedValue(SmallField);
-      var zone = $._wiLeft.zoneInfoValue();
-      var avgZone = $._wiLeft.zoneInfoAverage();
-      mWD.drawLeftInfo(zone.fontColor, value, zone.color, $._wiLeft.units(),
-                       avgZone.color, zone.perc, zone.color100perc);
-    }
-
-    if ($._wiRight != null) {
-      var value = $._wiRight.formattedValue(SmallField);
-      var zone = $._wiRight.zoneInfoValue();
-      var avgZone = $._wiRight.zoneInfoAverage();
-      mWD.drawRightInfo(zone.fontColor, value, zone.color, $._wiRight.units(),
-                        avgZone.color, zone.perc, zone.color100perc);
+  
+  function getShowInformation(showInfo, showInfoHrFallback,
+                              showInfoTrainingEffectFallback,
+                              info as Activity.Info) as WhatInformation {
+    // System.println("showInfo: " + showInfo);
+    switch (showInfo) {
+      case ShowInfoPower:
+        return new WhatAppBase.WhatInformation(_wPower.powerPerX(),
+                                   _wPower.getAveragePower(),
+                                   _wPower.getMaxPower(), _wPower);
+      case ShowInfoHeartrate:
+        if (info != null) {
+          _wHeartrate.updateInfo(info);
+        }
+        if (!_wHeartrate.isAvailable() &&
+            showInfoHrFallback != ShowInfoNothing) {
+          return getShowInformation(showInfoHrFallback, ShowInfoNothing,
+                                    ShowInfoNothing, null);
+        }
+        return new WhatAppBase.WhatInformation(_wHeartrate.getCurrentHeartrate(),
+                                   _wHeartrate.getAverageHeartrate(),
+                                   _wHeartrate.getMaxHeartrate(), _wHeartrate);
+      case ShowInfoSpeed:
+        return new WhatAppBase.WhatInformation(_wSpeed.getCurrentSpeed(),
+                                   _wSpeed.getAverageSpeed(),
+                                   _wSpeed.getMaxSpeed(), _wSpeed);
+      case ShowInfoCadence:
+        return new WhatAppBase.WhatInformation(_wCadence.getCurrentCadence(),
+                                   _wCadence.getAverageCadence(),
+                                   _wCadence.getMaxCadence(), _wCadence);
+      case ShowInfoAltitude:
+        return new WhatAppBase.WhatInformation(_wAltitude.getCurrentAltitude(), 0, 0,
+                                   _wAltitude);
+      case ShowInfoGrade:
+        return new WhatAppBase.WhatInformation(_wGrade.getGrade(), 0, 0, _wGrade);
+      case ShowInfoHeading:
+        return new WhatAppBase.WhatInformation(_wHeading.getCurrentHeading(), 0, 0,
+                                   _wHeading);
+      case ShowInfoDistance:
+        return new WhatAppBase.WhatInformation(_wDistance.getElapsedDistanceMorKm(), 0, 0,
+                                   _wDistance);
+      case ShowInfoAmbientPressure:
+        return new WhatAppBase.WhatInformation(_wPressure.getPressure(), 0, 0,
+                                   _wPressure);
+      case ShowInfoTimeOfDay:
+        return new WhatAppBase.WhatInformation(_wTime.getTime(), 0, 0, _wTime);
+      case ShowInfoCalories:
+        return new WhatAppBase.WhatInformation(_wCalories.getCalories(), 0, 0, _wCalories);
+      case ShowInfoTotalAscent:
+        return new WhatAppBase.WhatInformation(_wAltitude.getTotalAscent(), 0, 0,
+                                   _wAltitude);
+      case ShowInfoTotalDescent:
+        return new WhatAppBase.WhatInformation(_wAltitude.getTotalDescent(), 0, 0,
+                                   _wAltitude);
+      case ShowInfoTrainingEffect:
+        if (info != null) {
+          _wTrainingEffect.updateInfo(info);
+        }
+        if (!_wTrainingEffect.isAvailable() &&
+            showInfoTrainingEffectFallback != ShowInfoNothing) {
+          return getShowInformation(showInfoTrainingEffectFallback,
+                                    ShowInfoNothing, ShowInfoNothing, null);
+        }
+        return new WhatAppBase.WhatInformation(_wTrainingEffect.getTrainingEffect(), 0, 0,
+                                   _wTrainingEffect);
+      case ShowInfoEnergyExpenditure:
+        return new WhatAppBase.WhatInformation(_wEngergyExpenditure.getEnergyExpenditure(),
+                                   0, 0, _wEngergyExpenditure);
+      case ShowInfoNothing:
+      default:
+        return null;
     }
   }
 }

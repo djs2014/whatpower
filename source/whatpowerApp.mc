@@ -1,6 +1,8 @@
 import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
+using WhatUtils as Utils;
+using WhatAppBase;
 
 var _wiTop as WhatInformation;
 var _wiLeft as WhatInformation;
@@ -14,39 +16,39 @@ var _wGrade as WhatGrade;
 var _wDistance as WhatDistance;
 var _wAltitude as WhatAltitude;
 var _wSpeed as WhatSpeed;
-var _wPowerressure as WhatPressure;
+var _wPressure as WhatPressure;
 var _wCalories as WhatCalories;
 var _wTrainingEffect as WhatTrainingEffect;
 var _wTime as WhatTime;
 var _wHeading as WhatHeading;
 var _wEngergyExpenditure as WhatEngergyExpenditure;
 
-var _showInfoTop = ShowInfoPower;
-var _showInfoLeft = ShowInfoNothing;
-var _showInfoRight = ShowInfoNothing;
-var _showInfoBottom = ShowInfoNothing;
-var _showInfoHrFallback = ShowInfoNothing;
-var _showInfoTrainingEffectFallback = ShowInfoNothing;
-var _showInfoLayout = LayoutMiddleCircle;
+var _showInfoTop = WhatAppBase.ShowInfoPower;
+var _showInfoLeft = WhatAppBase.ShowInfoNothing;
+var _showInfoRight = WhatAppBase.ShowInfoNothing;
+var _showInfoBottom = WhatAppBase.ShowInfoNothing;
+var _showInfoHrFallback = WhatAppBase.ShowInfoNothing;
+var _showInfoTrainingEffectFallback = WhatAppBase.ShowInfoNothing;
+var _showInfoLayout = WhatAppBase.LayoutMiddleCircle;
 var _showSealevelPressure = true;
 
 class whatpowerApp extends Application.AppBase {
   function initialize() {
     AppBase.initialize();
 
-    _wPower = new WhatPower();
-    _wHeartrate = new WhateHeartrate();
-    _wCadence = new WhatCadence();
-    _wDistance = new WhatDistance();
-    _wAltitude = new WhatAltitude();
-    _wGrade = new WhatGrade();
-    _wSpeed = new WhatSpeed();
-    _wPowerressure = new WhatPressure();
-    _wCalories = new WhatCalories();
-    _wTrainingEffect = new WhatTrainingEffect();
-    _wTime = new WhatTime();
-    _wHeading = new WhatHeading();
-    _wEngergyExpenditure = new WhatEngergyExpenditure();
+    _wPower = new WhatAppBase.WhatPower();
+    _wHeartrate = new WhatAppBase.WhateHeartrate();
+    _wCadence = new WhatAppBase.WhatCadence();
+    _wDistance = new WhatAppBase.WhatDistance();
+    _wAltitude = new WhatAppBase.WhatAltitude();
+    _wGrade = new WhatAppBase.WhatGrade();
+    _wSpeed = new WhatAppBase.WhatSpeed();
+    _wPressure = new WhatAppBase.WhatPressure();
+    _wCalories = new WhatAppBase.WhatCalories();
+    _wTrainingEffect = new WhatAppBase.WhatTrainingEffect();
+    _wTime = new WhatAppBase.WhatTime();
+    _wHeading = new WhatAppBase.WhatHeading();
+    _wEngergyExpenditure = new WhatAppBase.WhatEngergyExpenditure();
   }
 
   // onStart() is called on application start up
@@ -67,36 +69,42 @@ class whatpowerApp extends Application.AppBase {
 
     function loadUserSettings() {
       try {
-        $._showInfoTop = getNumberProperty("showInfoTop", ShowInfoPower);
-        $._showInfoLeft = getNumberProperty("showInfoLeft", ShowInfoHeartrate);
-        $._showInfoRight = getNumberProperty("showInfoRight", ShowInfoCadence);
-        $._showInfoBottom = getNumberProperty("showInfoBottom", ShowInfoSpeed);
+        $._showInfoTop = Utils.getNumberProperty("showInfoTop", WhatAppBase.ShowInfoPower);
+        $._showInfoLeft =
+            Utils.getNumberProperty("showInfoLeft", WhatAppBase.ShowInfoHeartrate);
+        $._showInfoRight =
+            Utils.getNumberProperty("showInfoRight", WhatAppBase.ShowInfoCadence);
+        $._showInfoBottom =
+            Utils.getNumberProperty("showInfoBottom", WhatAppBase.ShowInfoSpeed);
         $._showInfoHrFallback =
-            getNumberProperty("showInfoHrFallback", ShowInfoCalories);
-        $._showInfoTrainingEffectFallback = getNumberProperty(
-            "showInfoTrainingEffectFallback", ShowInfoEnergyExpenditure);
+            Utils.getNumberProperty("showInfoHrFallback", WhatAppBase.ShowInfoCalories);
+        $._showInfoTrainingEffectFallback = Utils.getNumberProperty(
+            "showInfoTrainingEffectFallback", WhatAppBase.ShowInfoEnergyExpenditure);
 
         $._showInfoLayout =
-            getNumberProperty("showInfoLayout", LayoutMiddleCircle);
+            Utils.getNumberProperty("showInfoLayout", WhatAppBase.LayoutMiddleCircle);
 
-        _wPower.setFtp(getNumberProperty("ftpValue", 200));
-        _wPower.setPerSec(getNumberProperty("powerPerSecond", 3));
+        _wPower.setFtp(Utils.getNumberProperty("ftpValue", 200));
+        _wPower.setPerSec(Utils.getNumberProperty("powerPerSecond", 3));
 
-        _wPowerressure.setShowSeaLevelPressure(
-            getBooleanProperty("showSeaLevelPressure", true));
-        _wPowerressure.setPerMin(
-            getNumberProperty("calcAvgPressurePerMinute", 30));
-        _wPowerressure.reset();  //@@ QnD start activity
+        _wPressure.setShowSeaLevelPressure(
+            Utils.getBooleanProperty("showSeaLevelPressure", true));
+        _wPressure.setPerMin(
+            Utils.getNumberProperty("calcAvgPressurePerMinute", 30));
+        _wPressure.reset();  //@@ QnD start activity
 
         _wHeartrate.initZones();
-        _wSpeed.setTargetSpeed(getNumberProperty("targetSpeed", 30));
-        _wCadence.setTargetCadence(getNumberProperty("targetCadence", 95));
-        _wDistance.setTargetDistance(getNumberProperty("targetDistance", 150));
-        _wCalories.setTargetCalories(getNumberProperty("targetCalories", 2000));
+        _wSpeed.setTargetSpeed(Utils.getNumberProperty("targetSpeed", 30));
+        _wCadence.setTargetCadence(
+            Utils.getNumberProperty("targetCadence", 95));
+        _wDistance.setTargetDistance(
+            Utils.getNumberProperty("targetDistance", 150));
+        _wCalories.setTargetCalories(
+            Utils.getNumberProperty("targetCalories", 2000));
         _wEngergyExpenditure.setTargetEngergyExpenditure(
-            getNumberProperty("targetEnergyExpenditure", 15));
+            Utils.getNumberProperty("targetEnergyExpenditure", 15));
         _wHeading.setMinimalLocationAccuracy(
-            getNumberProperty("minimalLocationAccuracy", 2));
+            Utils.getNumberProperty("minimalLocationAccuracy", 2));
 
         System.println("Settings loaded");
       } catch (ex) {
