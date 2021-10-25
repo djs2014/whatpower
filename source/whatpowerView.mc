@@ -90,7 +90,7 @@ class whatpowerView extends WatchUi.DataField {
     if ($._wiLeft == null) {
       return;
     }
-    var value = $._wiLeft.formattedValue(SmallField);
+    var value = $._wiLeft.formattedValue(WhatAppBase.SmallField);
     var zone = $._wiLeft.zoneInfoValue();
     var avgZone = $._wiLeft.zoneInfoAverage();
     mWD.drawLeftInfo(zone.fontColor, value, zone.color, $._wiLeft.units(),
@@ -100,7 +100,7 @@ class whatpowerView extends WatchUi.DataField {
     if ($._wiTop == null) {
       return;
     }
-    var value = $._wiTop.formattedValue(SmallField);
+    var value = $._wiTop.formattedValue(WhatAppBase.SmallField);
     var zone = $._wiTop.zoneInfoValue();
     var avgZone = $._wiTop.zoneInfoAverage();
     mWD.drawTopInfo(zone.name, zone.fontColor, value, zone.color,
@@ -112,7 +112,7 @@ class whatpowerView extends WatchUi.DataField {
     if ($._wiRight == null) {
       return;
     }
-    var value = $._wiRight.formattedValue(SmallField);
+    var value = $._wiRight.formattedValue(WhatAppBase.SmallField);
     var zone = $._wiRight.zoneInfoValue();
     var avgZone = $._wiRight.zoneInfoAverage();
     mWD.drawRightInfo(zone.fontColor, value, zone.color, $._wiRight.units(),
@@ -147,69 +147,69 @@ class whatpowerView extends WatchUi.DataField {
                               info as Activity.Info) as WhatInformation {
     // System.println("showInfo: " + showInfo);
     switch (showInfo) {
-      case ShowInfoPower:
+      case WhatAppBase.ShowInfoPower:
         return new WhatAppBase.WhatInformation(_wPower.powerPerX(),
                                    _wPower.getAveragePower(),
                                    _wPower.getMaxPower(), _wPower);
-      case ShowInfoHeartrate:
+      case WhatAppBase.ShowInfoHeartrate:
         if (info != null) {
           _wHeartrate.updateInfo(info);
         }
         if (!_wHeartrate.isAvailable() &&
-            showInfoHrFallback != ShowInfoNothing) {
-          return getShowInformation(showInfoHrFallback, ShowInfoNothing,
-                                    ShowInfoNothing, null);
+            showInfoHrFallback != WhatAppBase.ShowInfoNothing) {
+          return getShowInformation(showInfoHrFallback, WhatAppBase.ShowInfoNothing,
+                                    WhatAppBase.ShowInfoNothing, null);
         }
         return new WhatAppBase.WhatInformation(_wHeartrate.getCurrentHeartrate(),
                                    _wHeartrate.getAverageHeartrate(),
                                    _wHeartrate.getMaxHeartrate(), _wHeartrate);
-      case ShowInfoSpeed:
+      case WhatAppBase.ShowInfoSpeed:
         return new WhatAppBase.WhatInformation(_wSpeed.getCurrentSpeed(),
                                    _wSpeed.getAverageSpeed(),
                                    _wSpeed.getMaxSpeed(), _wSpeed);
-      case ShowInfoCadence:
+      case WhatAppBase.ShowInfoCadence:
         return new WhatAppBase.WhatInformation(_wCadence.getCurrentCadence(),
                                    _wCadence.getAverageCadence(),
                                    _wCadence.getMaxCadence(), _wCadence);
-      case ShowInfoAltitude:
+      case WhatAppBase.ShowInfoAltitude:
         return new WhatAppBase.WhatInformation(_wAltitude.getCurrentAltitude(), 0, 0,
                                    _wAltitude);
-      case ShowInfoGrade:
+      case WhatAppBase.ShowInfoGrade:
         return new WhatAppBase.WhatInformation(_wGrade.getGrade(), 0, 0, _wGrade);
-      case ShowInfoHeading:
+      case WhatAppBase.ShowInfoHeading:
         return new WhatAppBase.WhatInformation(_wHeading.getCurrentHeading(), 0, 0,
                                    _wHeading);
-      case ShowInfoDistance:
+      case WhatAppBase.ShowInfoDistance:
         return new WhatAppBase.WhatInformation(_wDistance.getElapsedDistanceMorKm(), 0, 0,
                                    _wDistance);
-      case ShowInfoAmbientPressure:
+      case WhatAppBase.ShowInfoAmbientPressure:
         return new WhatAppBase.WhatInformation(_wPressure.getPressure(), 0, 0,
                                    _wPressure);
-      case ShowInfoTimeOfDay:
+      case WhatAppBase.ShowInfoTimeOfDay:
         return new WhatAppBase.WhatInformation(_wTime.getTime(), 0, 0, _wTime);
-      case ShowInfoCalories:
+      case WhatAppBase.ShowInfoCalories:
         return new WhatAppBase.WhatInformation(_wCalories.getCalories(), 0, 0, _wCalories);
-      case ShowInfoTotalAscent:
+      case WhatAppBase.ShowInfoTotalAscent:
         return new WhatAppBase.WhatInformation(_wAltitude.getTotalAscent(), 0, 0,
                                    _wAltitude);
-      case ShowInfoTotalDescent:
+      case WhatAppBase.ShowInfoTotalDescent:
         return new WhatAppBase.WhatInformation(_wAltitude.getTotalDescent(), 0, 0,
                                    _wAltitude);
-      case ShowInfoTrainingEffect:
+      case WhatAppBase.ShowInfoTrainingEffect:
         if (info != null) {
           _wTrainingEffect.updateInfo(info);
         }
         if (!_wTrainingEffect.isAvailable() &&
-            showInfoTrainingEffectFallback != ShowInfoNothing) {
+            showInfoTrainingEffectFallback != WhatAppBase.ShowInfoNothing) {
           return getShowInformation(showInfoTrainingEffectFallback,
-                                    ShowInfoNothing, ShowInfoNothing, null);
+                                    WhatAppBase.ShowInfoNothing, WhatAppBase.ShowInfoNothing, null);
         }
         return new WhatAppBase.WhatInformation(_wTrainingEffect.getTrainingEffect(), 0, 0,
                                    _wTrainingEffect);
-      case ShowInfoEnergyExpenditure:
+      case WhatAppBase.ShowInfoEnergyExpenditure:
         return new WhatAppBase.WhatInformation(_wEngergyExpenditure.getEnergyExpenditure(),
                                    0, 0, _wEngergyExpenditure);
-      case ShowInfoNothing:
+      case WhatAppBase.ShowInfoNothing:
       default:
         return null;
     }

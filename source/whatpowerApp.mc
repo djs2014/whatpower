@@ -69,15 +69,15 @@ class whatpowerApp extends Application.AppBase {
 
     function loadUserSettings() {
       try {
-        $._showInfoTop = Utils.getNumberProperty("showInfoTop", WhatAppBase.ShowInfoPower);
+        $._showInfoTop = Utils.getNumberProperty("showInfoTop", WhatAppBase.ShowInfoTrainingEffect);
         $._showInfoLeft =
-            Utils.getNumberProperty("showInfoLeft", WhatAppBase.ShowInfoHeartrate);
+            Utils.getNumberProperty("showInfoLeft", WhatAppBase.ShowInfoPower);
         $._showInfoRight =
-            Utils.getNumberProperty("showInfoRight", WhatAppBase.ShowInfoCadence);
+            Utils.getNumberProperty("showInfoRight", WhatAppBase.ShowInfoHeartrate);
         $._showInfoBottom =
-            Utils.getNumberProperty("showInfoBottom", WhatAppBase.ShowInfoSpeed);
+            Utils.getNumberProperty("showInfoBottom", WhatAppBase.ShowInfoCalories);
         $._showInfoHrFallback =
-            Utils.getNumberProperty("showInfoHrFallback", WhatAppBase.ShowInfoCalories);
+            Utils.getNumberProperty("showInfoHrFallback", WhatAppBase.ShowInfoCadence);
         $._showInfoTrainingEffectFallback = Utils.getNumberProperty(
             "showInfoTrainingEffectFallback", WhatAppBase.ShowInfoEnergyExpenditure);
 

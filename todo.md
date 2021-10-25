@@ -1,3 +1,6 @@
+barrel
+-> encapsulate all, less enums -> make function
+
 @@ only left, middle, right fields -> simpler
 @@ fallback for HR, Te fields
 @@ extra field for ?? and how to display -> when single field
@@ -31,7 +34,6 @@ add check symbol when target reached
 x only calc when shown
 
 when no movement -> use heading compass not gps data (should move 1 meter?)
-barrel
 icons for heartrate etc.
 activity pause -> show avg ex. calories/elapsed time
     power
