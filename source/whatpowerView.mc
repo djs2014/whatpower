@@ -83,7 +83,7 @@ class whatpowerView extends WatchUi.DataField {
     drawTopInfo(dc);
     drawLeftInfo(dc);
     drawRightInfo(dc);
-    drawBottomInfo(dc);    
+    drawBottomInfo(dc);
   }
 
   function drawLeftInfo(dc) {
@@ -128,7 +128,7 @@ class whatpowerView extends WatchUi.DataField {
     var label = zone.name;  // @@ should be short
     mWD.drawBottomInfo(zone.fontColor, label, value, $._wiBottom.units(),
                        zone.color, zone.perc, zone.color100perc);
-  } 
+  }
 
   function drawBottomDataTriangle(dc) {
     var value = $._wiBottom.formattedValue(mWD.fieldType);
@@ -141,74 +141,81 @@ class whatpowerView extends WatchUi.DataField {
     mWD.drawInfoTriangleThingy(color, label, value, $._wiBottom.units(),
                                backColor, zone.perc, zone.color100perc);
   }
-  
+
   function getShowInformation(showInfo, showInfoHrFallback,
                               showInfoTrainingEffectFallback,
                               info as Activity.Info) as WhatInformation {
     // System.println("showInfo: " + showInfo);
     switch (showInfo) {
       case WhatAppBase.ShowInfoPower:
-        return new WhatAppBase.WhatInformation(_wPower.powerPerX(),
-                                   _wPower.getAveragePower(),
-                                   _wPower.getMaxPower(), _wPower);
+        return new WhatAppBase.WhatInformation(
+            $._wPower.powerPerX(), $._wPower.getAveragePower(),
+            $._wPower.getMaxPower(), $._wPower);
       case WhatAppBase.ShowInfoHeartrate:
         if (info != null) {
-          _wHeartrate.updateInfo(info);
+          $._wHeartrate.updateInfo(info);
         }
-        if (!_wHeartrate.isAvailable() &&
+        if (!$._wHeartrate.isAvailable() &&
             showInfoHrFallback != WhatAppBase.ShowInfoNothing) {
-          return getShowInformation(showInfoHrFallback, WhatAppBase.ShowInfoNothing,
+          return getShowInformation(showInfoHrFallback,
+                                    WhatAppBase.ShowInfoNothing,
                                     WhatAppBase.ShowInfoNothing, null);
         }
-        return new WhatAppBase.WhatInformation(_wHeartrate.getCurrentHeartrate(),
-                                   _wHeartrate.getAverageHeartrate(),
-                                   _wHeartrate.getMaxHeartrate(), _wHeartrate);
+        return new WhatAppBase.WhatInformation(
+            $._wHeartrate.getCurrentHeartrate(),
+            $._wHeartrate.getAverageHeartrate(),
+            $._wHeartrate.getMaxHeartrate(), $._wHeartrate);
       case WhatAppBase.ShowInfoSpeed:
-        return new WhatAppBase.WhatInformation(_wSpeed.getCurrentSpeed(),
-                                   _wSpeed.getAverageSpeed(),
-                                   _wSpeed.getMaxSpeed(), _wSpeed);
+        return new WhatAppBase.WhatInformation(
+            $._wSpeed.getCurrentSpeed(), $._wSpeed.getAverageSpeed(),
+            $._wSpeed.getMaxSpeed(), $._wSpeed);
       case WhatAppBase.ShowInfoCadence:
-        return new WhatAppBase.WhatInformation(_wCadence.getCurrentCadence(),
-                                   _wCadence.getAverageCadence(),
-                                   _wCadence.getMaxCadence(), _wCadence);
+        return new WhatAppBase.WhatInformation(
+            $._wCadence.getCurrentCadence(), $._wCadence.getAverageCadence(),
+            $._wCadence.getMaxCadence(), $._wCadence);
       case WhatAppBase.ShowInfoAltitude:
-        return new WhatAppBase.WhatInformation(_wAltitude.getCurrentAltitude(), 0, 0,
-                                   _wAltitude);
+        return new WhatAppBase.WhatInformation(
+            $._wAltitude.getCurrentAltitude(), 0, 0, $._wAltitude);
       case WhatAppBase.ShowInfoGrade:
-        return new WhatAppBase.WhatInformation(_wGrade.getGrade(), 0, 0, _wGrade);
+        return new WhatAppBase.WhatInformation($._wGrade.getGrade(), 0, 0,
+                                               $._wGrade);
       case WhatAppBase.ShowInfoHeading:
-        return new WhatAppBase.WhatInformation(_wHeading.getCurrentHeading(), 0, 0,
-                                   _wHeading);
+        return new WhatAppBase.WhatInformation($._wHeading.getCurrentHeading(),
+                                               0, 0, $._wHeading);
       case WhatAppBase.ShowInfoDistance:
-        return new WhatAppBase.WhatInformation(_wDistance.getElapsedDistanceMorKm(), 0, 0,
-                                   _wDistance);
+        return new WhatAppBase.WhatInformation(
+            $._wDistance.getElapsedDistanceMorKm(), 0, 0, $._wDistance);
       case WhatAppBase.ShowInfoAmbientPressure:
-        return new WhatAppBase.WhatInformation(_wPressure.getPressure(), 0, 0,
-                                   _wPressure);
+        return new WhatAppBase.WhatInformation($._wPressure.getPressure(), 0, 0,
+                                               $._wPressure);
       case WhatAppBase.ShowInfoTimeOfDay:
-        return new WhatAppBase.WhatInformation(_wTime.getTime(), 0, 0, _wTime);
+        return new WhatAppBase.WhatInformation($._wTime.getTime(), 0, 0,
+                                               $._wTime);
       case WhatAppBase.ShowInfoCalories:
-        return new WhatAppBase.WhatInformation(_wCalories.getCalories(), 0, 0, _wCalories);
+        return new WhatAppBase.WhatInformation($._wCalories.getCalories(), 0, 0,
+                                               $._wCalories);
       case WhatAppBase.ShowInfoTotalAscent:
-        return new WhatAppBase.WhatInformation(_wAltitude.getTotalAscent(), 0, 0,
-                                   _wAltitude);
+        return new WhatAppBase.WhatInformation($._wAltitude.getTotalAscent(), 0,
+                                               0, $._wAltitude);
       case WhatAppBase.ShowInfoTotalDescent:
-        return new WhatAppBase.WhatInformation(_wAltitude.getTotalDescent(), 0, 0,
-                                   _wAltitude);
+        return new WhatAppBase.WhatInformation($._wAltitude.getTotalDescent(),
+                                               0, 0, $._wAltitude);
       case WhatAppBase.ShowInfoTrainingEffect:
         if (info != null) {
-          _wTrainingEffect.updateInfo(info);
+          $._wTrainingEffect.updateInfo(info);
         }
-        if (!_wTrainingEffect.isAvailable() &&
+        if (!$._wTrainingEffect.isAvailable() &&
             showInfoTrainingEffectFallback != WhatAppBase.ShowInfoNothing) {
           return getShowInformation(showInfoTrainingEffectFallback,
-                                    WhatAppBase.ShowInfoNothing, WhatAppBase.ShowInfoNothing, null);
+                                    WhatAppBase.ShowInfoNothing,
+                                    WhatAppBase.ShowInfoNothing, null);
         }
-        return new WhatAppBase.WhatInformation(_wTrainingEffect.getTrainingEffect(), 0, 0,
-                                   _wTrainingEffect);
+        return new WhatAppBase.WhatInformation(
+            $._wTrainingEffect.getTrainingEffect(), 0, 0, $._wTrainingEffect);
       case WhatAppBase.ShowInfoEnergyExpenditure:
-        return new WhatAppBase.WhatInformation(_wEngergyExpenditure.getEnergyExpenditure(),
-                                   0, 0, _wEngergyExpenditure);
+        return new WhatAppBase.WhatInformation(
+            $._wEngergyExpenditure.getEnergyExpenditure(), 0, 0,
+            $._wEngergyExpenditure);
       case WhatAppBase.ShowInfoNothing:
       default:
         return null;
