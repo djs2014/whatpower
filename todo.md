@@ -1,3 +1,14 @@
+default right == hr -> fallback is calories
+default speed => circle top info
+
+nightmode - when not started or paused
+- circle + line and black background not filled and filled rectangle around text on top of triangle
+
+heading: only after x meters calc lat/lng heading / speed?
+larger font in big fields
+use custom font for icons: wingding oid 
+
+
 barrel
 -> encapsulate all, less enums -> make function
 
