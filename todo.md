@@ -1,48 +1,5 @@
-default right == hr -> fallback is calories
-default speed => circle top info
-
-nightmode - when not started or paused
-- circle + line and black background not filled and filled rectangle around text on top of triangle
-
-heading: only after x meters calc lat/lng heading / speed?
-larger font in big fields
-use custom font for icons: wingding oid 
-
-
-barrel
--> encapsulate all, less enums -> make function
-
-@@ only left, middle, right fields -> simpler
-@@ fallback for HR, Te fields
-@@ extra field for ?? and how to display -> when single field
-
-layout
-Settings
-    - Hide middle on small fields
-Define layout values:
-    - Circles: All circles (default)
-    - Triangle middle: @@ add label + avg value border
-        When show bottom -> triangle is smaller y-only 
-        - no middle -> bottom triangle
-        - middle triangle + bottom bar
-
-options:
-    - Top null -> 
-    - Top & bottom null -> left/right bigger and closer to each
-    - only left or right or Top or bottom -> draw center
-
-
 rotations 
 https://forums.garmin.com/developer/connect-iq/f/discussion/250/feature-request-add-option-to-draw-a-polygon-at-a-certain-position
-
-triangle field
-- in background
-- color white when 
-4 left/right - font after digit smaller => so font stays larger see speed.
-2 center Top circle @@ pressure too long ??
-3 2 fields -> triangle bottom
-add check symbol when target reached
-x only calc when shown
 
 when no movement -> use heading compass not gps data (should move 1 meter?)
 icons for heartrate etc.
