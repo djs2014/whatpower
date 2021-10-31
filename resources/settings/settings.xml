@@ -105,6 +105,9 @@
 	<setting propertyKey="@Properties.minimalLocationAccuracy" title="@Strings.MinimalLocationAccuracy">
 		<settingConfig type="numeric" min="0" max="4"/>
 	</setting>	
+	<setting propertyKey="@Properties.minimalElapsedDistanceInMeters" title="@Strings.MinimalElapsedDistanceInMeters">
+		<settingConfig type="numeric" min="0" max="10"/>
+	</setting>	
 	
 	<setting propertyKey="@Properties.showInfoLayout" title="@Strings.ShowInfoLayout" prompt="@Strings.ShowInfoLayoutPrompt">
         <settingConfig type="list">

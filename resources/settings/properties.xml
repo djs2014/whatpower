@@ -12,7 +12,8 @@
 	<property id="powerPerSecond" type="number">3</property>	
 	<property id="showSeaLevelPressure" type="boolean">true</property>			
 	<property id="calcAvgPressurePerMinute" type="number">30</property>
-	<property id="minimalLocationAccuracy" type="number">2</property>
+	<property id="minimalLocationAccuracy" type="number">0</property>
+	<property id="minimalElapsedDistanceInMeters" type="number">0</property>
 	
 	<property id="targetSpeed" type="number">30</property>	
 	<property id="targetDistance" type="number">150</property>	
