@@ -19,4 +19,6 @@
 	<property id="targetCalories" type="number">2000</property>	
 	<property id="targetCadence" type="number">95</property>	
 	<property id="targetEnergyExpenditure" type="number">15</property>		
+
+	<property id="debug" type="boolean">false</property>	
 </properties>
