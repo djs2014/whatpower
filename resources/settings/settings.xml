@@ -14,7 +14,8 @@
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
 			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>
-			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>					
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>
+			<listEntry value="18">@Strings.ShowInfoTestfield</listEntry>								
         </settingConfig>
     </setting>      
 	<setting propertyKey="@Properties.showInfoLeft" title="@Strings.ShowInfoLeft" prompt="@Strings.ShowInfoPrompt">
@@ -32,7 +33,8 @@
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>		
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
 			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>
-			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>				
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>
+			<listEntry value="18">@Strings.ShowInfoTestfield</listEntry>												
         </settingConfig>
     </setting> 
 	<setting propertyKey="@Properties.showInfoRight" title="@Strings.ShowInfoRight" prompt="@Strings.ShowInfoPrompt">
@@ -50,7 +52,8 @@
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>	
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
 			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>
-			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>				
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>
+			<listEntry value="18">@Strings.ShowInfoTestfield</listEntry>												
         </settingConfig>
     </setting> 
 	 <setting propertyKey="@Properties.showInfoBottom" title="@Strings.ShowInfoBottom" prompt="@Strings.ShowInfoPrompt">
@@ -68,7 +71,8 @@
 			<listEntry value="10">@Strings.ShowInfoTimeOfDay</listEntry>	
 			<listEntry value="11">@Strings.ShowInfoCalories</listEntry>	
 			<listEntry value="14">@Strings.ShowInfoTrainingEffect</listEntry>	
-			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>		
+			<listEntry value="16">@Strings.ShowInfoEnergyExpenditure</listEntry>
+			<listEntry value="18">@Strings.ShowInfoTestfield</listEntry>										
         </settingConfig>
     </setting> 
 
@@ -154,4 +158,11 @@
 	<setting propertyKey="@Properties.debug" title="@Strings.Debug">
 		<settingConfig type="boolean" />
 	</setting> 
+	<setting propertyKey="@Properties.targetTestValue" title="@Strings.TargetTestValue">
+		<settingConfig type="numeric"/>
+	</setting>	
+	<setting propertyKey="@Properties.testValue" title="@Strings.TestValue">
+		<settingConfig type="numeric"/>
+	</setting>	
+	
 </settings>
