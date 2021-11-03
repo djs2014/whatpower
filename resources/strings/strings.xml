@@ -28,6 +28,7 @@
     
     <string id="ShowInfoNothing">Nothing</string>
     <string id="ShowInfoPower">Show power</string>    
+    <string id="ShowInfoPowerPerWeight">Show power/weight</string>    
     <string id="ShowInfoHeartrate">Show heartrate (HR)</string>
     <string id="ShowInfoSpeed">Show speed</string>    
     <string id="ShowInfoCadence">Show cadence</string>    
