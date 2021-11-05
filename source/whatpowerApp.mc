@@ -8,8 +8,9 @@ class whatpowerApp extends Application.AppBase {
 
   function initialize() {
     AppBase.initialize();
+    whatApp = new WhatAppBase.WhatApp();
     var appName = Application.loadResource(Rez.Strings.AppName) as Lang.String;
-    whatApp = new WhatAppBase.WhatApp(appName);    
+    whatApp.setAppName(appName);
   }
 
     function onStart(state as Dictionary?) as Void {
