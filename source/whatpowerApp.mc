@@ -4,7 +4,7 @@ import Toybox.WatchUi;
 using WhatAppBase;
 
 class whatpowerApp extends Application.AppBase {
-  var whatApp = null as WhatAppBase.WhatApp;
+  var whatApp as WhatAppBase.WhatApp;
 
   function initialize() {
     AppBase.initialize();
