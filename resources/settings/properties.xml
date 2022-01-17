@@ -21,6 +21,10 @@
 	<property id="targetCadence" type="number">95</property>	
 	<property id="targetEnergyExpenditure" type="number">15</property>		
 
+	<property id="hitEnabled" type="boolean">false</property>			
+	<property id="hitStartOnPerc" type="number">150</property>		
+	<property id="hitStopOnPerc" type="number">100</property>	
+
 	<property id="debug" type="boolean">false</property>	
 	<property id="targetTestValue" type="number">100</property>	
 	<property id="testValue" type="number">145</property>		 
