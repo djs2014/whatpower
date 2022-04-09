@@ -4,7 +4,7 @@
 	<property id="showInfoRight" type="number">2</property>
 	<property id="showInfoBottom" type="number">11</property>
 	<property id="showInfoHrFallback" type="number">4</property>
-	<property id="showInfoTrainingEffectFallback" type="number">16</property>
+	<property id="showInfoTrainingEffectFallback" type="number">6</property>
 
 	<property id="showInfoLayout" type="number">0</property>
 

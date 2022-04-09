@@ -14,9 +14,11 @@ class whatpowerApp extends Application.AppBase {
   }
 
     function onStart(state as Dictionary?) as Void {
+      whatApp.onStart(state);
     }
 
     function onStop(state as Dictionary?) as Void {
+      whatApp.onStop(state);
     }
 
     function getInitialView() as Array<Views or InputDelegates> ? {
