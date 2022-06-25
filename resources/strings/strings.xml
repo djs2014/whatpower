@@ -13,7 +13,8 @@
     <string id="TargetCalories">Target calories (kcal)</string>    
     <string id="TargetCadence">Target cadence (rpm)</string>    
     <string id="TargetEnergyExpenditure">Target energy expenditure (kcal/min)</string>    
-
+    <string id="TargetGrade">Target grade (%)</string>    
+    <string id="TargetTemperature">Target temperature (C)</string>    
 
     <string id="ShowSeaLevelPressure">Show pressure at sealevel</string>   
             
