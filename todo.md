@@ -1,3 +1,4 @@
+optimize mem -> no barrels / git module
 rotations 
 https://forums.garmin.com/developer/connect-iq/f/discussion/250/feature-request-add-option-to-draw-a-polygon-at-a-certain-position
 
